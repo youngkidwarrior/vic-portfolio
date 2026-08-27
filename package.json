@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
+    "build:sites": "bun run build && rm -rf ./dist && mkdir -p ./dist/server ./dist/client && cp -R ./build/client/. ./dist/client/ && cp ./sites-worker.mjs ./dist/server/index.js",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc --noEmit",
