@@ -11,7 +11,7 @@ const roles = [
   {
     company: "Send",
     role: "Senior full-stack engineer",
-    period: "Jan 2023–Aug 2026",
+    period: "Jan 2023 - Aug 2026",
     bullets: [
       "Led a passkey-secured virtual debit card from architecture through launch, spanning wallet ownership, KYC, issuance, funding, 3DS, lifecycle controls, webhooks, and durable workflows.",
       "Architected activity scoring and token distribution that delivered 81M+ SEND by July 2026, equal to 27% of the community allocation and approximately $1.46M at the published reference price.",
@@ -22,7 +22,7 @@ const roles = [
   {
     company: "Shenanigan Tech LLC",
     role: "Founder and technical lead",
-    period: "2018–2023",
+    period: "2018 - 2023",
     bullets: [
       "Founded and bootstrapped a cryptocurrency startup, raised $100K+ through community support, and led six recurring contributors and two contractors.",
       "Created PANTS, a community fundraising and token-reward mechanism that extended operating runway by 12 months.",
@@ -32,7 +32,7 @@ const roles = [
   {
     company: "BrightID Discord Bot",
     role: "Project lead",
-    period: "2020–2023",
+    period: "2020 - 2023",
     bullets: [
       "Took an identity-verification bot from hackathon prototype to a production service that verified 11,000+ people in one year.",
       "Migrated deployment from Heroku to Railway and operated a dedicated BrightID node.",
@@ -41,7 +41,7 @@ const roles = [
   {
     company: "Ethereum and DAO ecosystem",
     role: "Selected open-source contributor",
-    period: "2018–2023",
+    period: "2018 - 2023",
     bullets: [
       "Shipped React, Solidity, payment, and identity improvements across SourceCred, Honeyswap, BrightID, and Colony.",
     ],
@@ -53,7 +53,6 @@ export default function Resume() {
     <article className="resume-page page-frame">
       <header className="resume-header">
         <div>
-          <p className="mono-label">Resume</p>
           <h1>Victor Ginelli</h1>
           <p>Founder and full-stack product engineer</p>
         </div>

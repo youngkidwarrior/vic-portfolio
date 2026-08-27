@@ -1,10 +1,11 @@
 import { ArrowDownRight, ArrowUpRight } from "@phosphor-icons/react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import type { MetaFunction } from "react-router";
-import { KineticArt } from "~/components/kinetic-art";
+import { AtmosphericArt } from "~/components/atmospheric-art";
+import { ProductProof } from "~/components/product-proof";
 import { ProjectRow } from "~/components/project-row";
+import { RecognitionDossier } from "~/components/recognition-dossier";
 import { Reveal } from "~/components/reveal";
-import { projects, site, skills } from "~/data/site";
+import { projects, recognition, site, skills } from "~/data/site";
 
 export const meta: MetaFunction = () => [
   { title: "Victor Ginelli | Founding product engineer" },
@@ -12,9 +13,7 @@ export const meta: MetaFunction = () => [
 ];
 
 export default function Home() {
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const ruleX = useTransform(scrollYProgress, [0, 1], ["-35%", "35%"]);
+  const leadProject = projects[0];
 
   return (
     <>
@@ -24,12 +23,14 @@ export default function Home() {
           <h1><span>I turn hard systems</span><span>into usable products.</span></h1>
           <p className="hero-subhead">{site.description}</p>
           <div className="hero-actions">
-            <a className="button button-primary" href={`mailto:${site.email}`}>Start a conversation <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
-            <a className="button button-secondary" href="#work">View work <ArrowDownRight size="1em" weight="bold" aria-hidden /></a>
+            <a className="button button-primary" href="#work">View selected work <ArrowDownRight size="1em" weight="bold" aria-hidden /></a>
+            <a className="button button-secondary" href="/resume">Read resume <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
           </div>
         </div>
-        <KineticArt src="/images/hero-poster.webp" alt="Original abstract artwork showing many complex paths becoming one product flow" className="hero-art" />
-        <motion.div className="hero-rule" style={reduced ? undefined : { x: ruleX }} aria-hidden />
+        <div className="hero-proof-stage">
+          <AtmosphericArt asset={leadProject.decorativeArt} className="hero-atmosphere" />
+          <ProductProof asset={leadProject.heroAsset} priority className="hero-product-proof" />
+        </div>
       </section>
 
       <section className="signal-band page-frame" aria-label="Practice areas">
@@ -63,11 +64,11 @@ export default function Home() {
 
       <section className="recognition-section page-frame">
         <Reveal className="recognition-copy">
-          <p className="mono-label">Recognition</p>
-          <h2>Winner, Aragon Hack for Freedom</h2>
-          <p>Built a decentralized application with Solidity, React, and Aragon OS. An early signal of the work that followed: technical range put in service of a usable product.</p>
+          <h2>{recognition.headline}</h2>
+          <p>{recognition.summary}</p>
+          <p className="recognition-attestation">Owner-attested result · documentary proof reserved</p>
         </Reveal>
-        <div className="recognition-mark" aria-hidden><span>HACK</span><strong>→</strong><span>SHIP</span></div>
+        <RecognitionDossier recognition={recognition} />
       </section>
 
       <section className="about-section page-frame" id="about">
@@ -85,7 +86,6 @@ export default function Home() {
 
       <section className="availability page-frame">
         <p>{site.availability}</p>
-        <a className="button button-primary" href={`mailto:${site.email}`}>Start a conversation <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
       </section>
     </>
   );
