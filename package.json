@@ -1,0 +1,47 @@
+{
+  "name": "victor-ginelli-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "check": "bun run typecheck && bun run test && bun run build"
+  },
+  "dependencies": {
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@mdx-js/react": "latest",
+    "@phosphor-icons/react": "latest",
+    "@react-router/node": "7.9.5",
+    "@react-router/serve": "7.9.5",
+    "motion": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router": "7.9.5",
+    "isbot": "5.1.31"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "latest",
+    "@mdx-js/rollup": "latest",
+    "@playwright/test": "latest",
+    "@react-router/dev": "7.9.5",
+    "@tailwindcss/vite": "latest",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@types/node": "22",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "jsdom": "26.1.0",
+    "tailwindcss": "latest",
+    "typescript": "5.9.3",
+    "vite": "7.1.12",
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest": "3.2.4"
+  }
+}
