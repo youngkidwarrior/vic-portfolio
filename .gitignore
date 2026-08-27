@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+jspm_packages/
+.pnp
+.pnp.*
+.pnpm-store/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Build output and framework caches
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.vite/
+.cache/
+.parcel-cache/
+storybook-static/
+*.tsbuildinfo
+
+# Tests and coverage
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# ReScript generated output
+lib/bs/
+lib/ocaml/
+*.bs.js
+*.res.js
+*.res.mjs
+*.res.cjs
+*.res.d.ts
+.bsb.lock
+
+# Environment and local overrides
+.env
+.env.*
+!.env.example
+*.local.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
