@@ -12,7 +12,7 @@ vi.mock("~/components/reveal", () => ({
 
 afterEach(cleanup);
 
-describe("Campaign 4 selected work", () => {
+describe("selected work", () => {
   it("gives every project one authentic screenshot and one concise composition", () => {
     const { container } = render(
       <MemoryRouter>

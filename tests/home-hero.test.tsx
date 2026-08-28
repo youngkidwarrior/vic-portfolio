@@ -11,7 +11,7 @@ vi.mock("~/components/reveal", () => ({
 
 afterEach(cleanup);
 
-describe("Campaign 4 homepage", () => {
+describe("homepage", () => {
   it("leads with Victor, his portrait, introduction, and resume", () => {
     const { container } = render(<Home />);
     const hero = container.querySelector(".hero");

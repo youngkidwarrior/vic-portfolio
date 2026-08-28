@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getProject, projectBySlug, projects, recognition, site } from "~/data/site";
+import { projectBySlug, projects, recognition, site, type Project } from "~/data/site";
 
 describe("portfolio content model", () => {
   it("has four unique projects with stable route lookups", () => {
@@ -8,9 +8,8 @@ describe("portfolio content model", () => {
 
     for (const project of projects) {
       expect(projectBySlug[project.slug]).toBe(project);
-      expect(getProject(project.slug)).toBe(project);
     }
-    expect(getProject("not-a-project")).toBeUndefined();
+    expect((projectBySlug as Record<string, Project | undefined>)["not-a-project"]).toBeUndefined();
   });
 
   it("keeps every public image and project action on HTTPS", () => {
@@ -22,19 +21,19 @@ describe("portfolio content model", () => {
   });
 
   it("keeps outcomes in human-readable project copy instead of a metrics model", () => {
-    expect(getProject("send")?.lede).toContain("$53M+");
-    expect(getProject("shenanigan")?.contributions.map(({ detail }) => detail).join(" ")).toContain("$100K+");
-    expect(getProject("brightid")?.lede).toContain("11,000+");
-    expect(getProject("open-source")?.lede).toContain("four open-source ecosystems");
+    expect(projectBySlug.send.lede).toContain("$53M+");
+    expect(projectBySlug.shenanigan.contributions.map(({ detail }) => detail).join(" ")).toContain("$100K+");
+    expect(projectBySlug.brightid.lede).toContain("11,000+");
+    expect(projectBySlug["open-source"].lede).toContain("four open-source ecosystems");
     expect(JSON.stringify(projects)).not.toMatch(/"metrics"/);
   });
 
   it("represents the complete primary contribution scope from the resume", () => {
-    expect(getProject("send")?.contributions).toHaveLength(5);
-    expect(getProject("shenanigan")?.contributions).toHaveLength(4);
-    expect(getProject("brightid")?.contributions).toHaveLength(4);
-    expect(getProject("open-source")?.contributions).toHaveLength(4);
-    expect(getProject("open-source")?.links.map(({ label }) => label)).toEqual([
+    expect(projectBySlug.send.contributions).toHaveLength(5);
+    expect(projectBySlug.shenanigan.contributions).toHaveLength(4);
+    expect(projectBySlug.brightid.contributions).toHaveLength(4);
+    expect(projectBySlug["open-source"].contributions).toHaveLength(4);
+    expect(projectBySlug["open-source"].links.map(({ label }) => label)).toEqual([
       "SourceCred",
       "Honeyswap",
       "BrightID",

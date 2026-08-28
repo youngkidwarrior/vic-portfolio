@@ -6,7 +6,7 @@ import { projects } from "~/data/site";
 
 afterEach(cleanup);
 
-describe("Campaign 4 case studies", () => {
+describe("case studies", () => {
   it("uses a screenshot-led account of Victor's complete project scope", () => {
     for (const project of projects) {
       const { container, unmount } = render(
