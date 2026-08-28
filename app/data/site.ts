@@ -209,7 +209,3 @@ export const recognition = {
 export const projectBySlug = Object.fromEntries(
   projects.map((project) => [project.slug, project]),
 ) as Record<ProjectSlug, Project>;
-
-export function getProject(slug: string): Project | undefined {
-  return projectBySlug[slug as ProjectSlug];
-}

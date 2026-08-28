@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 const css = readFileSync("app/styles/app.css", "utf8");
 
 describe("Montréal Editorial design system", () => {
-  it("uses the Campaign 3 saturated screen-print palette", () => {
+  it("uses the saturated screen-print palette", () => {
     expect(css).toContain("--canvas: #f1eadb;");
     expect(css).toContain("--ink: #11110f;");
     expect(css).toContain("--accent: #0057a8;");
