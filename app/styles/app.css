@@ -567,6 +567,8 @@ img { display: block; max-width: 100%; }
 .project-row:nth-child(even) .project-screenshot { order: 2; }
 .project-row:nth-child(even) .project-copy { order: 1; }
 .project-screenshot, .case-screenshot { margin: 0; padding-top: .75rem; border-top: 2px solid var(--project-color, var(--accent)); }
+.project-image-link { display: block; }
+.project-image-link:focus-visible { outline: 3px solid var(--project-color, var(--accent)); outline-offset: 4px; }
 .project-screenshot img, .case-screenshot img { width: 100%; height: auto; max-height: 720px; object-fit: cover; object-position: center; background: var(--surface); }
 .project-screenshot figcaption, .case-screenshot figcaption { margin-top: .75rem; color: var(--muted); font: 500 .7rem/1.4 "IBM Plex Mono", monospace; }
 .simple-project .project-copy h3 { margin: .75rem 0 1.1rem; }

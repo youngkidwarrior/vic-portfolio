@@ -138,6 +138,7 @@ export type OwnershipBlock = {
 
 export type ProjectScreenshot = {
   src: `/images/work/${string}.jpg`;
+  href: HttpsUrl;
   width: number;
   height: number;
   alt: string;
@@ -319,6 +320,7 @@ export const projects: Project[] = [
     links: [{ label: "Visit Send", href: "https://send.it" }],
     screenshot: {
       src: "/images/work/send.jpg",
+      href: "https://send.it",
       width: 1120,
       height: 630,
       alt: "Send website showing a customer using the mobile payments product",
@@ -446,6 +448,7 @@ export const projects: Project[] = [
     ],
     screenshot: {
       src: "/images/work/pants.jpg",
+      href: "https://pants.energy",
       width: 720,
       height: 576,
       alt: "PANTS product page showing digital clothing available to buy",
@@ -561,6 +564,7 @@ export const projects: Project[] = [
     ],
     screenshot: {
       src: "/images/work/brightid-bot.jpg",
+      href: "https://bot.brightid.org",
       width: 1120,
       height: 630,
       alt: "BrightID Bot dashboard for Discord community verification",
@@ -660,6 +664,7 @@ export const projects: Project[] = [
     ],
     screenshot: {
       src: "/images/work/open-source.jpg",
+      href: "https://github.com/youngkidwarrior",
       width: 1120,
       height: 630,
       alt: "Victor Ginelli's GitHub profile with pinned open-source projects",

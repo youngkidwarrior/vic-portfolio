@@ -35,7 +35,7 @@ export default function Home() {
           <h2>Four products, clearly told.</h2>
         </Reveal>
         <div className="project-list">
-          {projects.map((project, index) => <ProjectRow key={project.slug} project={project} index={index} />)}
+          {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
         </div>
       </section>
 
