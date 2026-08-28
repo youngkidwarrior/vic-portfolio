@@ -102,6 +102,37 @@ for (const width of [320, 390, 620, 621, 900, 901]) {
   });
 }
 
+for (const width of [320, 390]) {
+  test(`display headings remain fully visible at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+
+    for (const route of routes) {
+      await page.goto(route);
+      await page.evaluate(() => document.fonts.ready);
+      const headingBounds = await page.locator("h1, h2, h3, .footer-email").evaluateAll((headings) => {
+        return headings.map((heading) => {
+          const range = document.createRange();
+          range.selectNodeContents(heading);
+          const text = range.getBoundingClientRect();
+          return {
+            label: heading.textContent?.trim() ?? "heading",
+            left: text.left,
+            right: text.right,
+            viewportWidth: window.innerWidth,
+          };
+        });
+      });
+
+      for (const heading of headingBounds) {
+        expect(heading.left, `${route} ${heading.label} starts outside ${width}px`).toBeGreaterThanOrEqual(0);
+        expect(heading.right, `${route} ${heading.label} is clipped at ${width}px`).toBeLessThanOrEqual(
+          heading.viewportWidth,
+        );
+      }
+    }
+  });
+}
+
 test("the PDF resume is available", async ({ request }) => {
   const response = await request.get("/victor-ginelli-resume.pdf");
   expect(response.ok()).toBe(true);
