@@ -78,3 +78,18 @@
   - Record review notes, commit the coherent changeset, and publish the validated version.
 - Verification: `bun run check` and `bun run build:sites`
 - Dependencies: Tasks 3 and 4
+
+### Task 6: Remove retired agent-facing presentation machinery
+
+- Status: pending
+- Risk: medium
+- Outcome: Dead Campaign 1–3 presentation code and its internal review language no longer remain as a future regression path.
+- Marked for removal:
+  - `app/components/recognition-dossier.tsx`: candidate IDs, approval states, and artifact-review labels.
+  - `app/components/product-proof.tsx`: evidence priority, approval slots, disclosures, and source counters.
+  - `app/components/case-study/{evidence-sequence,expanded-proof,ownership-panel}.tsx`: numbered stages, evidence records, rights review, and ownership-ledger language.
+  - `app/components/selected-work/{send-product-stage,shenanigan-archive,brightid-verification-path,open-source-ledger,evidence}.tsx`: source-linked badges, numbered ledgers, and evidence IDs.
+  - Matching orphaned CSS and tests after confirming that no public route imports these components.
+  - Internal evidence fields in `app/data/site.ts` only after their useful source links are preserved in a visitor-facing content model.
+- Verification: search built pages for `agent-approved`, `human-pending`, candidate IDs, evidence counters, numbered project indices, and review-state labels.
+- Dependencies: Task 5
