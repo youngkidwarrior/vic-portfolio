@@ -1,5 +1,6 @@
 # Local inputs and working artifacts that must never be committed.
 *.ignore.*
+*.local.*
 .hunk/
 .DS_Store
 .env
