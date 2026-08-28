@@ -552,3 +552,51 @@ img { display: block; max-width: 100%; }
   .button:hover { transform: none; }
   .atmospheric-art img { transform: none !important; }
 }
+
+/* Campaign 4: a quieter, screenshot-led client story. */
+.hero { min-height: min(780px, calc(100dvh - 76px)); grid-template-columns: 1fr; align-content: center; }
+.hero-copy { max-width: 1040px; }
+.hero h1 { max-width: 11ch; font-size: clamp(4rem, 8.3vw, 8.25rem); }
+.hero-subhead { max-width: 55ch; font-size: clamp(1.1rem, 1.6vw, 1.35rem); }
+.work-section { padding-top: clamp(5rem, 9vw, 9rem); padding-bottom: clamp(5rem, 9vw, 9rem); }
+.section-intro h2 { max-width: 12ch; }
+.project-row::before { content: none; }
+.simple-project { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(300px, .72fr); gap: clamp(2.5rem, 6vw, 7rem); align-items: center; }
+.project-row:nth-child(even) .project-screenshot { order: 2; }
+.project-row:nth-child(even) .project-copy { order: 1; }
+.project-screenshot, .case-screenshot { margin: 0; padding-top: .75rem; border-top: 2px solid var(--project-color, var(--accent)); }
+.project-screenshot img, .case-screenshot img { width: 100%; height: auto; max-height: 720px; object-fit: cover; object-position: center; background: var(--surface); }
+.project-screenshot figcaption, .case-screenshot figcaption { margin-top: .75rem; color: var(--muted); font: 500 .7rem/1.4 "IBM Plex Mono", monospace; }
+.simple-project .project-copy h3 { margin: .75rem 0 1.1rem; }
+.simple-project .metric-line { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.simple-project-actions { display: flex; flex-wrap: wrap; gap: .9rem 1.5rem; }
+.recognition-compact { display: block; padding-top: clamp(5rem, 9vw, 8rem); padding-bottom: clamp(5rem, 9vw, 8rem); border-top: .45rem solid var(--yellow); }
+.recognition-compact .recognition-copy { max-width: 820px; }
+.recognition-compact .recognition-copy > p:not(.mono-label) { max-width: 48ch; color: var(--muted); font-size: 1.08rem; line-height: 1.6; }
+.recognition-compact .text-link { margin-top: 1rem; }
+.case-title-grid { grid-template-columns: 1fr; }
+.case-title-grid > div { max-width: 900px; }
+.case-title-grid h1 { font-size: clamp(4.5rem, 10vw, 9rem); }
+.case-screenshot { margin-top: clamp(3rem, 6vw, 5rem); }
+.metric-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.case-story { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 5rem); padding-top: clamp(5rem, 8vw, 8rem); padding-bottom: clamp(5rem, 8vw, 8rem); }
+.case-story h2 { margin: 0 0 1rem; font-size: clamp(1.5rem, 2.4vw, 2.35rem); line-height: 1; letter-spacing: -.045em; }
+.case-story p { margin: 0; color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
+
+@media (max-width: 900px) {
+  .simple-project { grid-template-columns: 1fr; }
+  .project-row:nth-child(even) .project-screenshot,
+  .project-row:nth-child(even) .project-copy { order: initial; }
+  .project-screenshot { width: 100%; }
+  .case-story { grid-template-columns: 1fr; max-width: 760px; margin-inline: auto; }
+}
+
+@media (max-width: 620px) {
+  .hero { min-height: calc(100dvh - 68px); }
+  .hero h1 { font-size: clamp(3.25rem, 16vw, 5.5rem); }
+  .project-row { padding-block: 3.5rem; }
+  .simple-project .metric-line,
+  .metric-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .project-screenshot figcaption, .case-screenshot figcaption { font-size: .64rem; }
+  .case-title-grid h1 { font-size: clamp(4rem, 21vw, 7rem); }
+}

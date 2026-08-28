@@ -1,13 +1,8 @@
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react";
-import type { ComponentType } from "react";
 import { Link } from "react-router";
-import { EvidenceSequence } from "~/components/case-study/evidence-sequence";
-import { ExpandedProof } from "~/components/case-study/expanded-proof";
-import { OwnershipPanel } from "~/components/case-study/ownership-panel";
-import { Reveal } from "~/components/reveal";
 import type { Project } from "~/data/site";
 
-export function ProjectPage({ project, Content }: { project: Project; Content: ComponentType }) {
+export function ProjectPage({ project }: { project: Project }) {
   return (
     <article className={`case-study project-${project.accent}`}>
       <header className="case-hero page-frame">
@@ -18,19 +13,29 @@ export function ProjectPage({ project, Content }: { project: Project; Content: C
             <h1>{project.title}</h1>
             <p className="case-lede">{project.lede}</p>
           </div>
-          <p className="case-summary">{project.summary}</p>
         </div>
-        <ExpandedProof project={project} />
+        <figure className="case-screenshot">
+          <img src={project.screenshot.src} alt={project.screenshot.alt} width={project.screenshot.width} height={project.screenshot.height} decoding="async" />
+          <figcaption>{project.screenshot.caption}</figcaption>
+        </figure>
       </header>
       <section className="metric-band page-frame" aria-label="Project outcomes">
-        {project.metrics.map((metric) => <div key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span></div>)}
+        {project.metrics.slice(0, 2).map((metric) => (
+          <div key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span></div>
+        ))}
       </section>
-      <Reveal className="case-body page-frame prose"><Content /></Reveal>
-      <OwnershipPanel project={project} />
-      <EvidenceSequence project={project} />
+      <section className="case-story page-frame">
+        <div><h2>The challenge</h2><p>{project.clientStory.challenge}</p></div>
+        <div><h2>Victor's contribution</h2><p>{project.clientStory.contribution}</p></div>
+        <div><h2>The result</h2><p>{project.clientStory.result}</p></div>
+      </section>
       <section className="external-links page-frame">
-        <h2>Continue exploring</h2>
-        <div>{project.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>)}</div>
+        <h2>Visit the project</h2>
+        <div>
+          {project.links.map((link) => (
+            <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
+          ))}
+        </div>
       </section>
     </article>
   );
