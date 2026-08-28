@@ -14,6 +14,10 @@ describe("Campaign 4 case studies", () => {
       );
 
       expect(screen.getByRole("img", { name: project.screenshot.alt })).toHaveAttribute("src", project.screenshot.src);
+      expect(screen.getByRole("link", { name: `Visit the website shown for ${project.title}` })).toHaveAttribute(
+        "href",
+        project.screenshot.href,
+      );
       expect(screen.getByRole("heading", { name: "The challenge" })).toBeInTheDocument();
       expect(screen.getByRole("heading", { name: "Victor's contribution" })).toBeInTheDocument();
       expect(screen.getByRole("heading", { name: "The result" })).toBeInTheDocument();

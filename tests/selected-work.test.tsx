@@ -16,7 +16,7 @@ describe("Campaign 4 selected work", () => {
   it("gives every project one authentic screenshot and one concise composition", () => {
     const { container } = render(
       <MemoryRouter>
-        {projects.map((project, index) => <ProjectRow key={project.slug} project={project} index={index} />)}
+        {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
       </MemoryRouter>,
     );
 
@@ -30,7 +30,7 @@ describe("Campaign 4 selected work", () => {
   it("limits every project to two outcomes and hides evidence metadata", () => {
     const { container } = render(
       <MemoryRouter>
-        {projects.map((project, index) => <ProjectRow key={project.slug} project={project} index={index} />)}
+        {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
       </MemoryRouter>,
     );
 
@@ -40,12 +40,14 @@ describe("Campaign 4 selected work", () => {
     expect(container.querySelector(".atmospheric-art")).not.toBeInTheDocument();
     expect(container.querySelector("[data-candidate-id]")).not.toBeInTheDocument();
     expect(container).not.toHaveTextContent(/agent-approved|human-pending|primary record|source-linked/i);
+    expect(container.querySelector("[data-project-sequence]")).not.toBeInTheDocument();
+    expect(container).not.toHaveTextContent(/\b0[1-9]\s*\/\s*20\d{2}/);
   });
 
   it("offers a direct live-project action for every project", () => {
     render(
       <MemoryRouter>
-        {projects.map((project, index) => <ProjectRow key={project.slug} project={project} index={index} />)}
+        {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
       </MemoryRouter>,
     );
 
@@ -53,6 +55,10 @@ describe("Campaign 4 selected work", () => {
       expect(screen.getByRole("link", { name: `Visit ${project.title}` })).toHaveAttribute(
         "href",
         project.links[0].href,
+      );
+      expect(screen.getByRole("link", { name: `Visit the website shown for ${project.title}` })).toHaveAttribute(
+        "href",
+        project.screenshot.href,
       );
     }
   });

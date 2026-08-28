@@ -15,7 +15,15 @@ export function ProjectPage({ project }: { project: Project }) {
           </div>
         </div>
         <figure className="case-screenshot">
-          <img src={project.screenshot.src} alt={project.screenshot.alt} width={project.screenshot.width} height={project.screenshot.height} decoding="async" />
+          <a
+            className="project-image-link"
+            href={project.screenshot.href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Visit the website shown for ${project.title}`}
+          >
+            <img src={project.screenshot.src} alt={project.screenshot.alt} width={project.screenshot.width} height={project.screenshot.height} decoding="async" />
+          </a>
           <figcaption>{project.screenshot.caption}</figcaption>
         </figure>
       </header>
