@@ -12,16 +12,21 @@ export const meta: MetaFunction = () => [
 export default function Home() {
   return (
     <>
-      <section className="hero page-frame">
+      <section className="hero page-frame" id="about">
         <div className="hero-copy">
-          <p className="mono-label">Product engineer and founder</p>
-          <h1>I make complex products feel simple.</h1>
-          <p className="hero-subhead">I design and build payments, identity, and mobile products from first idea to launch.</p>
+          <p className="mono-label">About</p>
+          <h1>Victor Ginelli</h1>
+          <p className="hero-role">Founder and product engineer.</p>
+          <p className="hero-subhead">Victor brings design and engineering together to make ambitious ideas clear, useful, and real.</p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#work">View my work <ArrowDownRight size="1em" weight="bold" aria-hidden /></a>
-            <a className="button button-secondary" href={`mailto:${site.email}`}>Start a conversation <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
+            <a className="button button-primary" href="/resume">Read Victor's resume <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
+            <a className="button button-secondary" href="#work">View selected work <ArrowDownRight size="1em" weight="bold" aria-hidden /></a>
           </div>
         </div>
+        <figure className="portrait-frame hero-portrait">
+          <img src="/images/victor-portrait.webp" alt="Portrait of Victor Ginelli" width="800" height="786" decoding="async" />
+          <figcaption>Victor Ginelli</figcaption>
+        </figure>
       </section>
 
       <section className="work-section page-frame" id="work">
@@ -43,18 +48,6 @@ export default function Home() {
         </Reveal>
       </section>
 
-      <section className="about-section page-frame" id="about">
-        <Reveal className="about-copy">
-          <p className="mono-label">About</p>
-          <h2>Product judgment, visual taste, and technical depth.</h2>
-          <p>Victor is a founder and product engineer who works across design, frontend, and systems. He turns complex ideas into clear, polished products people can trust.</p>
-          <a className="text-link" href="/resume">Read Victor's resume <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
-        </Reveal>
-        <figure className="portrait-frame">
-          <img src="/images/victor-portrait.webp" alt="Portrait of Victor Ginelli" width="800" height="786" decoding="async" />
-          <figcaption>Victor Ginelli</figcaption>
-        </figure>
-      </section>
     </>
   );
 }
