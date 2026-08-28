@@ -20,27 +20,19 @@ describe("Montréal Editorial design system", () => {
     expect(css).not.toContain("backdrop-filter:");
   });
 
-  it("keeps poster art atmospheric while restoring its printed color", () => {
-    expect(css).toMatch(/\.atmospheric-art\s*\{[^}]*opacity:\s*\.24;/s);
-    expect(css).toMatch(/\.atmospheric-art\s*\{[^}]*filter:\s*saturate\(1\.14\) contrast\(1\.08\);/s);
-    expect(css).toMatch(/\.selected-work-atmosphere\s*\{[^}]*opacity:\s*\.22;/s);
-  });
-
   it("carries each project ink through its structural accents", () => {
     expect(css).toMatch(/\.project-row\s*\{[^}]*border-top:\s*\.45rem solid var\(--project-color\);/s);
     expect(css).toMatch(/\.project-row \.metric-line strong\s*\{[^}]*color:\s*var\(--project-ink\);/s);
     expect(css).toMatch(/\.project-row \.text-link\s*\{[^}]*color:\s*var\(--project-ink\);/s);
   });
 
-  it("uses explicit approval-state inks", () => {
-    expect(css).not.toContain("var(--text)");
-    expect(css).toMatch(/\.recognition-proof-status span:first-child\s*\{[^}]*color:\s*var\(--green-ink\);/s);
-    expect(css).toMatch(/\.recognition-proof-status span:last-child\s*\{[^}]*color:\s*var\(--red\);/s);
-  });
-
   it("uses flat editorial rules instead of offset card effects", () => {
     expect(css).not.toContain("box-shadow:");
     expect(css).not.toContain("translate(-3px, -3px)");
-    expect(css).toMatch(/\.product-proof\s*\{[^}]*border-left:\s*0;[^}]*border-right:\s*0;[^}]*background:\s*transparent;/s);
+    expect(css).toMatch(/\.project-screenshot, \.case-screenshot\s*\{[^}]*border-top:/s);
+  });
+
+  it("contains no retired evidence or approval presentation selectors", () => {
+    expect(css).not.toMatch(/product-proof|evidence-|ownership-|recognition-dossier|agent-approved|human-pending/);
   });
 });

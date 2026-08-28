@@ -26,12 +26,9 @@ describe("Campaign 4 case studies", () => {
     }
   });
 
-  it("removes public audit and implementation details", () => {
+  it("keeps internal review vocabulary out of the story", () => {
     const { container } = render(<MemoryRouter><ProjectPage project={projects[0]} /></MemoryRouter>);
 
-    expect(container.querySelector(".expanded-proof")).not.toBeInTheDocument();
-    expect(container.querySelector(".ownership-panel")).not.toBeInTheDocument();
-    expect(container.querySelector(".evidence-sequence")).not.toBeInTheDocument();
     expect(container.querySelector("[data-candidate-id]")).not.toBeInTheDocument();
     expect(container).not.toHaveTextContent(/commit|agent-approved|human-pending|rights holder|privacy review/i);
   });

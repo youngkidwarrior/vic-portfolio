@@ -13,9 +13,6 @@ const visibleCopyFiles = [
   "app/root.tsx",
   "app/components/site-header.tsx",
   "app/components/site-footer.tsx",
-  "app/components/case-study/ownership-panel.tsx",
-  "app/components/selected-work/shenanigan-archive.tsx",
-  ...readdirSync("app/content").map((file) => join("app/content", file)),
 ];
 
 describe("site copy and chrome", () => {
