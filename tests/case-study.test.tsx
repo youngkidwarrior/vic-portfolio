@@ -25,7 +25,9 @@ describe("Campaign 4 case studies", () => {
         expect(container).toHaveTextContent(contribution.detail);
       }
       expect(container).not.toHaveTextContent(/the challenge|victor's contribution|the result/i);
-      expect(container.querySelectorAll(".metric-band > div")).toHaveLength(2);
+      expect(container.querySelector(".metric-band")).not.toBeInTheDocument();
+      expect(container).not.toHaveTextContent("Scope of work");
+      expect(screen.getByRole("heading", { name: "Project links" })).toBeInTheDocument();
       unmount();
     }
   });

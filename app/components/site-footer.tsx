@@ -5,8 +5,8 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div>
-        <p className="footer-callout">Have a hard system that should feel simple?</p>
-        <a className="footer-email" href={`mailto:${site.email}`}>Start a conversation <ArrowUpRight size="0.7em" weight="bold" aria-hidden /></a>
+        <p className="footer-callout">Building something ambitious?</p>
+        <a className="footer-email" href={`mailto:${site.email}`}>Get in touch <ArrowUpRight size="0.7em" weight="bold" aria-hidden /></a>
       </div>
       <div className="footer-links">
         <a href={site.github} target="_blank" rel="noreferrer">GitHub</a>

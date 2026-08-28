@@ -44,7 +44,7 @@ for (const route of routes) {
 
 test("primary journey reaches a case study and returns", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "Read the story" }).first().click();
+  await page.getByRole("link", { name: "Project details" }).first().click();
   await expect(page).toHaveURL(/\/work\/send$/);
   await expect(page.getByRole("heading", { level: 1, name: "Send" })).toBeVisible();
   await page.getByRole("link", { name: "All work" }).click();
@@ -74,8 +74,8 @@ test("reduced motion keeps the primary content visible", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Start a conversation" }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { level: 2, name: "Four products, clearly told." })).toBeAttached();
+  await expect(page.getByRole("link", { name: "Get in touch" }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: "My recent highlights" })).toBeAttached();
 });
 
 for (const route of caseStudyRoutes) {
@@ -83,9 +83,8 @@ for (const route of caseStudyRoutes) {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto(route);
     await expect(page.getByRole("img").first()).toBeVisible();
-    await expect(page.getByRole("heading", { name: "The challenge" })).toBeAttached();
-    await expect(page.getByRole("heading", { name: "Victor's contribution" })).toBeAttached();
-    await expect(page.getByRole("heading", { name: "The result" })).toBeAttached();
+    await expect(page.getByRole("heading", { name: "What Victor built" })).toBeAttached();
+    await expect(page.getByRole("heading", { name: "Project links" })).toBeAttached();
   });
 }
 
