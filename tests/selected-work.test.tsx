@@ -37,10 +37,18 @@ describe("Campaign 4 selected work", () => {
     for (const projectSection of container.querySelectorAll(".simple-project")) {
       expect(projectSection.querySelectorAll(".metric-line > div").length).toBeLessThanOrEqual(2);
     }
+    for (const project of projects) {
+      const projectSection = screen.getByRole("heading", { name: project.title }).closest(".simple-project");
+      expect(projectSection?.querySelectorAll(".project-contributions > li")).toHaveLength(project.contributions.length);
+      for (const contribution of project.contributions) {
+        expect(projectSection).toHaveTextContent(contribution.title);
+      }
+    }
     expect(container.querySelector("[data-candidate-id]")).not.toBeInTheDocument();
     expect(container).not.toHaveTextContent(/agent-approved|human-pending|primary record|source-linked/i);
     expect(container.querySelector("[data-project-sequence]")).not.toBeInTheDocument();
     expect(container).not.toHaveTextContent(/\b0[1-9]\s*\/\s*20\d{2}/);
+    expect(container).not.toHaveTextContent(/challenge|contribution:/i);
   });
 
   it("offers a direct live-project action for every project", () => {

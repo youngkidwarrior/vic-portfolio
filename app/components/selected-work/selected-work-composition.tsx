@@ -28,6 +28,11 @@ export function SelectedWorkComposition({ project, priority }: { project: Projec
         <p className="mono-label">{project.period} / {project.role}</p>
         <h3>{project.title}</h3>
         <p className="project-lede">{project.lede}</p>
+        <ul className="project-contributions" aria-label={`${project.title} scope of work`}>
+          {project.contributions.map((contribution) => (
+            <li key={contribution.title}>{contribution.title}</li>
+          ))}
+        </ul>
         <div className="metric-line">
           {project.metrics.map((metric) => <div key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span></div>)}
         </div>
