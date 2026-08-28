@@ -234,9 +234,17 @@ img { display: block; max-width: 100%; }
 .case-title-grid h1 { font-size: clamp(4.5rem, 10vw, 9rem); }
 .case-screenshot { margin-top: clamp(3rem, 6vw, 5rem); }
 .metric-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.case-story { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 5rem); padding-top: clamp(5rem, 8vw, 8rem); padding-bottom: clamp(5rem, 8vw, 8rem); }
-.case-story h2 { margin: 0 0 1rem; font-size: clamp(1.5rem, 2.4vw, 2.35rem); line-height: 1; letter-spacing: -.045em; }
-.case-story p { margin: 0; color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
+.project-contributions { display: flex; flex-wrap: wrap; gap: .4rem 1.35rem; margin: 1.75rem 0 0; padding: 1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); list-style: none; }
+.project-contributions li { position: relative; padding-left: .8rem; color: var(--ink); font-size: .82rem; line-height: 1.5; }
+.project-contributions li::before { content: ""; position: absolute; top: .62em; left: 0; width: .32rem; height: .32rem; background: var(--project-color, var(--accent)); }
+.contribution-section { padding-top: clamp(5rem, 8vw, 8rem); padding-bottom: clamp(5rem, 8vw, 8rem); }
+.contribution-heading { display: grid; grid-template-columns: minmax(150px, .32fr) 1fr; align-items: baseline; gap: clamp(2rem, 5vw, 6rem); margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+.contribution-heading .mono-label { color: var(--project-ink, var(--project-color)); font-weight: 700; }
+.contribution-heading h2 { margin: 0; font-size: clamp(3rem, 6vw, 6rem); line-height: .9; letter-spacing: -.06em; }
+.contribution-list { margin: 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
+.contribution-list li { display: grid; grid-template-columns: minmax(210px, .34fr) 1fr; gap: clamp(2rem, 5vw, 6rem); padding: 1.75rem 0; border-bottom: 1px solid var(--line); }
+.contribution-list h3 { margin: 0; color: var(--project-ink, var(--project-color)); font-size: clamp(1.2rem, 2vw, 1.75rem); line-height: 1.1; letter-spacing: -.035em; }
+.contribution-list p { max-width: 62ch; margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.6; }
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
@@ -245,7 +253,8 @@ img { display: block; max-width: 100%; }
   .project-row:nth-child(even) .project-screenshot,
   .project-row:nth-child(even) .project-copy { order: initial; }
   .project-screenshot { width: 100%; }
-  .case-story { grid-template-columns: 1fr; max-width: 760px; margin-inline: auto; }
+  .contribution-heading,
+  .contribution-list li { grid-template-columns: 1fr; gap: 1rem; }
 }
 
 @media (max-width: 620px) {
@@ -257,4 +266,6 @@ img { display: block; max-width: 100%; }
   .metric-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .project-screenshot figcaption, .case-screenshot figcaption { font-size: .64rem; }
   .case-title-grid h1 { font-size: clamp(4rem, 21vw, 7rem); }
+  .project-contributions { gap: .35rem .9rem; }
+  .contribution-list li { padding: 1.5rem 0; }
 }

@@ -7,7 +7,7 @@ import { projects } from "~/data/site";
 afterEach(cleanup);
 
 describe("Campaign 4 case studies", () => {
-  it("uses a screenshot-led Challenge / Contribution / Result story", () => {
+  it("uses a screenshot-led account of Victor's complete project scope", () => {
     for (const project of projects) {
       const { container, unmount } = render(
         <MemoryRouter><ProjectPage project={project} /></MemoryRouter>,
@@ -18,9 +18,13 @@ describe("Campaign 4 case studies", () => {
         "href",
         project.screenshot.href,
       );
-      expect(screen.getByRole("heading", { name: "The challenge" })).toBeInTheDocument();
-      expect(screen.getByRole("heading", { name: "Victor's contribution" })).toBeInTheDocument();
-      expect(screen.getByRole("heading", { name: "The result" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "What Victor built" })).toBeInTheDocument();
+      expect(container.querySelectorAll(".contribution-list > li")).toHaveLength(project.contributions.length);
+      for (const contribution of project.contributions) {
+        expect(screen.getByRole("heading", { name: contribution.title })).toBeInTheDocument();
+        expect(container).toHaveTextContent(contribution.detail);
+      }
+      expect(container).not.toHaveTextContent(/the challenge|victor's contribution|the result/i);
       expect(container.querySelectorAll(".metric-band > div")).toHaveLength(2);
       unmount();
     }
@@ -40,7 +44,7 @@ describe("Campaign 4 case studies", () => {
       );
       const words = (container.textContent ?? "").trim().split(/\s+/);
 
-      expect(words.length).toBeLessThan(180);
+      expect(words.length).toBeLessThan(260);
       const links = within(container).getAllByRole("link");
       expect(links.some((link) => link.getAttribute("href") === project.links[0].href)).toBe(true);
       unmount();
