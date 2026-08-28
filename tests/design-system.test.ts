@@ -22,7 +22,7 @@ describe("Montréal Editorial design system", () => {
 
   it("carries each project ink through its structural accents", () => {
     expect(css).toMatch(/\.project-row\s*\{[^}]*border-top:\s*\.45rem solid var\(--project-color\);/s);
-    expect(css).toMatch(/\.project-row \.metric-line strong\s*\{[^}]*color:\s*var\(--project-ink\);/s);
+    expect(css).toMatch(/\.contribution-list h3\s*\{[^}]*color:\s*var\(--project-ink,/s);
     expect(css).toMatch(/\.project-row \.text-link\s*\{[^}]*color:\s*var\(--project-ink\);/s);
   });
 

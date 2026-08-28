@@ -3,14 +3,14 @@ export type ProjectSlug = "send" | "shenanigan" | "brightid" | "open-source";
 
 export const site = {
   name: "Victor Ginelli",
-  role: "Founding product engineer",
+  role: "Founder and full-stack product engineer",
   url: "https://victor-ginelli-portfolio-demo.victor52668.chatgpt.site",
   socialImage: "/og.png",
   email: "victor@she.energy",
   github: "https://github.com/youngkidwarrior",
   resume: "/victor-ginelli-resume.pdf",
   description:
-    "Victor Ginelli designs and builds clear, polished products across payments, identity, and mobile.",
+    "Victor Ginelli is a founder and full-stack product engineer building payments, identity, mobile, blockchain, and community products.",
 };
 
 export type ProjectScreenshot = {
@@ -28,7 +28,6 @@ export type Project = {
   period: string;
   role: string;
   lede: string;
-  metrics: [{ value: string; label: string }, { value: string; label: string }];
   links: { label: string; href: HttpsUrl }[];
   screenshot: ProjectScreenshot;
   contributions: { title: string; detail: string }[];
@@ -41,11 +40,7 @@ export const projects: Project[] = [
     title: "Send",
     period: "2023 - 2026",
     role: "Senior full-stack engineer",
-    lede: "Led a passkey-secured card and mobile experience supporting more than $53M in transfers.",
-    metrics: [
-      { value: "$53M+", label: "onchain transfer volume" },
-      { value: "70K+", label: "passkeys supported" },
-    ],
+    lede: "Helped scale Send across web and mobile, supporting $53M+ in transfers, 70K+ passkeys, and 15 iOS releases.",
     links: [{ label: "Visit Send", href: "https://send.it" }],
     screenshot: {
       src: "/images/work/send.jpg",
@@ -62,11 +57,11 @@ export const projects: Project[] = [
       },
       {
         title: "Community rewards",
-        detail: "Designed a gaming-resistant activity and token-distribution system that allocated 81M+ SEND using behavioral signals, eligibility rules, and dynamic reward limits.",
+        detail: "Designed a gaming-resistant activity and token-distribution system that allocated 81M+ SEND, representing 27% of the community allocation, using behavioral signals, eligibility rules, and dynamic reward limits.",
       },
       {
         title: "Web and mobile platform",
-        detail: "Architected a shared foundation for web and native apps that supported 15 iOS releases, 1K+ Android downloads, 70K+ passkeys, and 20K Sendtags.",
+        detail: "Architected a shared foundation for web and native apps that supported 1K+ Android downloads and 20K Sendtags.",
       },
       {
         title: "Reliable payment operations",
@@ -84,11 +79,7 @@ export const projects: Project[] = [
     title: "Shenanigan",
     period: "2018 - 2023",
     role: "Founder and technical lead",
-    lede: "Founded and led a community product that raised $100K+ and added a year of runway.",
-    metrics: [
-      { value: "$100K+", label: "community support raised" },
-      { value: "12 mo", label: "runway added by PANTS" },
-    ],
+    lede: "Founded Shenanigan to help athletes earn from their work while keeping control of their identity and assets.",
     links: [
       { label: "Visit Shenanigan", href: "https://she.energy" },
       { label: "Visit PANTS", href: "https://pants.energy" },
@@ -103,16 +94,20 @@ export const projects: Project[] = [
     },
     contributions: [
       {
-        title: "Company and team",
-        detail: "Founded and bootstrapped the company, raised $100K+ from the community, and led six recurring contributors and two contractors.",
+        title: "Athlete and fan platform",
+        detail: "Built an experience for athletes to create and livestream challenges, receive direct support, and build fan communities and collectibles.",
       },
       {
-        title: "PANTS",
-        detail: "Created a community fundraising and token-reward mechanism that extended the company's operating runway by 12 months.",
+        title: "Dripp and $PANTS",
+        detail: "Created Dripp, a cross-community rewards system where supporters staked $PRTCLE, supplied liquidity, and earned redeemable $PANTS. The campaign extended Shenanigan’s runway by 12 months.",
       },
       {
-        title: "Community governance",
-        detail: "Designed a decentralized system that connected governance, measurable participation, and stakeholder rewards.",
+        title: "$PRTCLE fundraising",
+        detail: "Paired Gitcoin fundraising with token incentives that brought supporters into Shenanigan and contributed to a $100K+ community raise.",
+      },
+      {
+        title: "Company leadership and community governance",
+        detail: "Led six recurring contributors and two contractors, and designed public governance and contribution rewards around measurable participation.",
       },
     ],
     accent: "red",
@@ -123,10 +118,6 @@ export const projects: Project[] = [
     period: "2020 - 2023",
     role: "Project lead",
     lede: "Turned a weekend prototype into a service that verified 11,000+ people in one year.",
-    metrics: [
-      { value: "11K+", label: "people verified in one year" },
-      { value: "1", label: "dedicated BrightID node" },
-    ],
     links: [
       { label: "Visit BrightID Bot", href: "https://bot.brightid.org" },
       { label: "Visit BrightID", href: "https://www.brightid.org" },
@@ -165,10 +156,6 @@ export const projects: Project[] = [
     period: "2018 - 2023",
     role: "Selected contributor",
     lede: "Shipped focused product improvements across four open-source ecosystems.",
-    metrics: [
-      { value: "4", label: "ecosystems represented" },
-      { value: "Web→DAO", label: "full product surface" },
-    ],
     links: [
       { label: "SourceCred", href: "https://sourcecred.io" },
       { label: "Honeyswap", href: "https://honeyswap.org" },

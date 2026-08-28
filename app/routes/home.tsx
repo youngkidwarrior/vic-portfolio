@@ -5,7 +5,7 @@ import { Reveal } from "~/components/reveal";
 import { projects, recognition, site } from "~/data/site";
 
 export const meta: MetaFunction = () => [
-  { title: "Victor Ginelli | Founding product engineer" },
+  { title: "Victor Ginelli | Founder and full-stack product engineer" },
   { name: "description", content: site.description },
 ];
 
@@ -16,11 +16,11 @@ export default function Home() {
         <div className="hero-copy">
           <p className="mono-label">About</p>
           <h1>Victor Ginelli</h1>
-          <p className="hero-role">Founder and product engineer.</p>
-          <p className="hero-subhead">Victor brings design and engineering together to make ambitious ideas clear, useful, and real.</p>
+          <p className="hero-role">Founder and full-stack product engineer.</p>
+          <p className="hero-subhead">I’ve spent the last eight years building across the stack, turning ambitious ideas into products people can actually use.</p>
           <div className="hero-actions">
-            <a className="button button-primary" href="/resume">Read Victor's resume <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
-            <a className="button button-secondary" href="#work">View selected work <ArrowDownRight size="1em" weight="bold" aria-hidden /></a>
+            <a className="button button-primary" href="/resume">View résumé <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
+            <a className="button button-secondary" href="#work">See highlights <ArrowDownRight size="1em" weight="bold" aria-hidden /></a>
           </div>
         </div>
         <figure className="portrait-frame hero-portrait">
@@ -31,8 +31,7 @@ export default function Home() {
 
       <section className="work-section page-frame" id="work">
         <Reveal className="section-intro">
-          <p className="mono-label">Selected work</p>
-          <h2>Four products, clearly told.</h2>
+          <h2>My recent highlights</h2>
         </Reveal>
         <div className="project-list">
           {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
@@ -43,7 +42,7 @@ export default function Home() {
         <Reveal className="recognition-copy">
           <p className="mono-label">Recognition</p>
           <h2>{recognition.headline}</h2>
-          <p>Built NFT Request, a decentralized request-and-payment product.</p>
+          <p>Built NFT Request, a hackathon prototype that let people browse NFTs held by an Aragon DAO, make token-backed offers, and complete approved exchanges through the DAO’s existing governance process.</p>
           <a className="text-link" href={recognition.supportingProof[0].source} target="_blank" rel="noreferrer">View the project <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
         </Reveal>
       </section>

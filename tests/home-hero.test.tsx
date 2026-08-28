@@ -19,13 +19,14 @@ describe("Campaign 4 homepage", () => {
     expect(hero).not.toBeNull();
     const heroQueries = within(hero as HTMLElement);
     expect(heroQueries.getByRole("heading", { level: 1 })).toHaveTextContent("Victor Ginelli");
-    expect(heroQueries.getByText(/founder and product engineer/i)).toBeInTheDocument();
+    expect(heroQueries.getByText(/founder and full-stack product engineer/i)).toBeInTheDocument();
     expect(heroQueries.getByRole("img", { name: "Portrait of Victor Ginelli" })).toHaveAttribute(
       "src",
       "/images/victor-portrait.webp",
     );
-    expect(heroQueries.getByRole("link", { name: /Read Victor's resume/i })).toHaveAttribute("href", "/resume");
-    expect(heroQueries.getByRole("link", { name: /View selected work/i })).toHaveAttribute("href", "#work");
+    expect(heroQueries.getByText("I’ve spent the last eight years building across the stack, turning ambitious ideas into products people can actually use.")).toBeInTheDocument();
+    expect(heroQueries.getByRole("link", { name: /View résumé/i })).toHaveAttribute("href", "/resume");
+    expect(heroQueries.getByRole("link", { name: /See highlights/i })).toHaveAttribute("href", "#work");
   });
 
   it("keeps the homepage vocabulary visitor-facing", () => {
@@ -40,5 +41,7 @@ describe("Campaign 4 homepage", () => {
     expect(screen.getByRole("heading", { level: 2, name: "Winner, Aragon Hack for Freedom" })).toBeInTheDocument();
     expect(container.querySelectorAll("#about")).toHaveLength(1);
     expect(screen.getAllByRole("img", { name: "Portrait of Victor Ginelli" })).toHaveLength(1);
+    expect(screen.getByRole("heading", { level: 2, name: "My recent highlights" })).toBeInTheDocument();
+    expect(container).not.toHaveTextContent(/Selected work|Four products, clearly told/i);
   });
 });
