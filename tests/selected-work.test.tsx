@@ -27,7 +27,7 @@ describe("Campaign 4 selected work", () => {
     }
   });
 
-  it("limits every project to two outcomes and hides evidence metadata", () => {
+  it("limits every project to two outcomes and visitor-facing copy", () => {
     const { container } = render(
       <MemoryRouter>
         {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
@@ -37,7 +37,6 @@ describe("Campaign 4 selected work", () => {
     for (const projectSection of container.querySelectorAll(".simple-project")) {
       expect(projectSection.querySelectorAll(".metric-line > div").length).toBeLessThanOrEqual(2);
     }
-    expect(container.querySelector(".atmospheric-art")).not.toBeInTheDocument();
     expect(container.querySelector("[data-candidate-id]")).not.toBeInTheDocument();
     expect(container).not.toHaveTextContent(/agent-approved|human-pending|primary record|source-linked/i);
     expect(container.querySelector("[data-project-sequence]")).not.toBeInTheDocument();

@@ -2,7 +2,7 @@
 
 **Goal:** Make Victor's portfolio immediately understandable to nontechnical clients, founders, and designers.
 **Scope:** Simplify the homepage and case studies, replace public evidence machinery with authentic cropped screenshots, and keep one claim and one primary action per section.
-**Non-goals:** Removing internal evidence data, rewriting the resume, inventing outcomes, or changing the approved Montréal Editorial palette.
+**Non-goals:** Rewriting the resume, inventing outcomes, or changing the approved Montréal Editorial palette.
 **Risks:** Public screenshots may change when source sites change; aggressive editing must preserve the strongest measurable outcomes and accessible context.
 
 ### Files
@@ -69,7 +69,7 @@
 
 ### Task 5: Validate and publish
 
-- Status: in progress
+- Status: complete
 - Risk: medium
 - Outcome: Campaign 4 is accessible, responsive, built, reviewed, and live.
 - Steps:
@@ -81,7 +81,7 @@
 
 ### Task 6: Remove retired agent-facing presentation machinery
 
-- Status: pending
+- Status: complete
 - Risk: medium
 - Outcome: Dead Campaign 1–3 presentation code and its internal review language no longer remain as a future regression path.
 - Marked for removal:

@@ -28,7 +28,7 @@ export function ProjectPage({ project }: { project: Project }) {
         </figure>
       </header>
       <section className="metric-band page-frame" aria-label="Project outcomes">
-        {project.metrics.slice(0, 2).map((metric) => (
+        {project.metrics.map((metric) => (
           <div key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span></div>
         ))}
       </section>

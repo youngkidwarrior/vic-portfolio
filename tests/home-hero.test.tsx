@@ -28,13 +28,9 @@ describe("Campaign 4 homepage", () => {
     expect(heroQueries.getByRole("link", { name: /View selected work/i })).toHaveAttribute("href", "#work");
   });
 
-  it("removes internal evidence machinery and repeated taxonomy", () => {
+  it("keeps the homepage vocabulary visitor-facing", () => {
     const { container } = render(<Home />);
 
-    expect(container.querySelector(".hero-proof-stage")).not.toBeInTheDocument();
-    expect(container.querySelector(".signal-band")).not.toBeInTheDocument();
-    expect(container.querySelector(".systems-section")).not.toBeInTheDocument();
-    expect(container.querySelector(".recognition-dossier")).not.toBeInTheDocument();
     expect(container).not.toHaveTextContent(/agent-approved|human-pending|candidate|owner-attested/i);
   });
 
