@@ -44,7 +44,7 @@ for (const route of routes) {
 
 test("primary journey reaches a case study and returns", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "Read case study" }).first().click();
+  await page.getByRole("link", { name: "Read the story" }).first().click();
   await expect(page).toHaveURL(/\/work\/send$/);
   await expect(page.getByRole("heading", { level: 1, name: "Send" })).toBeVisible();
   await page.getByRole("link", { name: "All work" }).click();
@@ -75,20 +75,17 @@ test("reduced motion keeps the primary content visible", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("link", { name: "Start a conversation" }).first()).toBeVisible();
-  const atmosphere = page.locator(".atmospheric-art img").first();
-  await expect(atmosphere).toBeAttached();
-  expect(await atmosphere.evaluate((element) => getComputedStyle(element).transform)).toBe("none");
+  await expect(page.getByRole("heading", { level: 2, name: "Four products, clearly told." })).toBeAttached();
 });
 
 for (const route of caseStudyRoutes) {
-  test(`${route} foregrounds sourced evidence with reduced motion`, async ({ page }) => {
+  test(`${route} foregrounds a concise project story with reduced motion`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto(route);
-    await expect(page.locator('[data-priority="primary"]')).toBeVisible();
-    await expect(page.getByText("Source", { exact: true }).first()).toBeVisible();
-    const atmosphere = page.locator(".atmospheric-art img").first();
-    await expect(atmosphere).toBeAttached();
-    expect(await atmosphere.evaluate((element) => getComputedStyle(element).transform)).toBe("none");
+    await expect(page.getByRole("img").first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: "The challenge" })).toBeAttached();
+    await expect(page.getByRole("heading", { name: "Victor's contribution" })).toBeAttached();
+    await expect(page.getByRole("heading", { name: "The result" })).toBeAttached();
   });
 }
 

@@ -1,47 +1,50 @@
-import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { cleanup, render, screen, within } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import Home from "~/routes/home";
-
-vi.mock("~/components/atmospheric-art", () => ({
-  AtmosphericArt: ({ asset }: { asset: { role: string; ariaHidden: boolean } }) => (
-    <div data-testid="hero-atmosphere" data-role={asset.role} aria-hidden={asset.ariaHidden} />
-  ),
-}));
-
-vi.mock("~/components/product-proof", () => ({
-  ProductProof: ({ asset, priority }: { asset: { candidateId: string; review: { agentApproval: string; humanApproval: string } }; priority: boolean }) => (
-    <div data-testid="hero-proof" data-candidate-id={asset.candidateId} data-priority={priority}>
-      {asset.review.agentApproval} {asset.review.humanApproval}
-    </div>
-  ),
-}));
 
 vi.mock("~/components/project-row", () => ({ ProjectRow: () => null }));
 vi.mock("~/components/reveal", () => ({
-  Reveal: ({ children, className }: { children: React.ReactNode; className?: string }) => <div className={className}>{children}</div>,
+  Reveal: ({ children, className }: { children: React.ReactNode; className?: string }) => (
+    <div className={className}>{children}</div>
+  ),
 }));
 
-describe("home documentary hero", () => {
-  it("leads with provisional Send proof and keeps generated art atmospheric", () => {
-    render(<Home />);
+afterEach(cleanup);
 
-    expect(screen.getByTestId("hero-proof")).toHaveAttribute("data-candidate-id", "SEND-PROOF-001");
-    expect(screen.getByTestId("hero-proof")).toHaveAttribute("data-priority", "true");
-    expect(screen.getByTestId("hero-proof")).toHaveTextContent("agent-approved human-pending");
-    expect(screen.getByTestId("hero-atmosphere")).toHaveAttribute("data-role", "decorative-atmosphere");
-    expect(screen.getByTestId("hero-atmosphere")).toHaveAttribute("aria-hidden", "true");
-  });
-
-  it("makes selected work primary, resume secondary, and omits contact from the hero", () => {
+describe("Campaign 4 homepage", () => {
+  it("leads with a concise, plain-language offer", () => {
     const { container } = render(<Home />);
     const hero = container.querySelector(".hero");
 
     expect(hero).not.toBeNull();
     const heroQueries = within(hero as HTMLElement);
-    expect(heroQueries.getByRole("heading", { level: 1 })).toHaveTextContent("I turn hard systemsinto usable products.");
-    expect(heroQueries.getByRole("link", { name: /View selected work/i })).toHaveAttribute("href", "#work");
-    expect(heroQueries.getByRole("link", { name: /^Read resume/i })).toHaveAttribute("href", "/resume");
-    expect(hero).not.toHaveTextContent("Start a conversation");
-    expect(hero?.querySelector(".hero-rule")).not.toBeInTheDocument();
+    expect(heroQueries.getByRole("heading", { level: 1 })).toHaveTextContent("I make complex products feel simple.");
+    expect(heroQueries.getByText(/payments, identity, and mobile products/i)).toBeInTheDocument();
+    expect(heroQueries.getByRole("link", { name: /View my work/i })).toHaveAttribute("href", "#work");
+    expect(heroQueries.getByRole("link", { name: /Start a conversation/i })).toHaveAttribute(
+      "href",
+      "mailto:victor@she.energy",
+    );
+  });
+
+  it("removes internal evidence machinery and repeated taxonomy", () => {
+    const { container } = render(<Home />);
+
+    expect(container.querySelector(".hero-proof-stage")).not.toBeInTheDocument();
+    expect(container.querySelector(".signal-band")).not.toBeInTheDocument();
+    expect(container.querySelector(".systems-section")).not.toBeInTheDocument();
+    expect(container.querySelector(".recognition-dossier")).not.toBeInTheDocument();
+    expect(container).not.toHaveTextContent(/agent-approved|human-pending|candidate|owner-attested/i);
+  });
+
+  it("keeps one compact award, a short introduction, and Victor's portrait", () => {
+    render(<Home />);
+
+    expect(screen.getByRole("heading", { level: 2, name: "Winner, Aragon Hack for Freedom" })).toBeInTheDocument();
+    expect(screen.getByText(/founder and product engineer who works across design/i)).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Portrait of Victor Ginelli" })).toHaveAttribute(
+      "src",
+      "/images/victor-portrait.webp",
+    );
   });
 });
