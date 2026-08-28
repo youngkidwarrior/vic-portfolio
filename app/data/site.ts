@@ -4,7 +4,7 @@ export type ProjectSlug = "send" | "shenanigan" | "brightid" | "open-source";
 export const site = {
   name: "Victor Ginelli",
   role: "Founder and full-stack product engineer",
-  url: "https://victor-ginelli-portfolio-demo.victor52668.chatgpt.site",
+  url: "https://victor.she.energy",
   socialImage: "/og.png",
   email: "victor@she.energy",
   github: "https://github.com/youngkidwarrior",

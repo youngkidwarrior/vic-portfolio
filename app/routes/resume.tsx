@@ -2,11 +2,13 @@ import { ArrowDown, ArrowUpRight } from "@phosphor-icons/react";
 import type { MetaFunction } from "react-router";
 import { resumeContent } from "~/data/resume";
 import { site } from "~/data/site";
+import { createSeoMeta } from "~/utils/seo";
 
-export const meta: MetaFunction = () => [
-  { title: "Resume | Victor Ginelli" },
-  { name: "description", content: resumeContent.profile },
-];
+export const meta: MetaFunction = () => createSeoMeta({
+  title: "Resume | Victor Ginelli",
+  description: resumeContent.profile,
+  pathname: "/resume",
+});
 
 export default function Resume() {
   return (

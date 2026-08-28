@@ -3,11 +3,13 @@ import type { MetaFunction } from "react-router";
 import { ProjectRow } from "~/components/project-row";
 import { Reveal } from "~/components/reveal";
 import { projects, recognition, site } from "~/data/site";
+import { createSeoMeta } from "~/utils/seo";
 
-export const meta: MetaFunction = () => [
-  { title: "Victor Ginelli | Founder and full-stack product engineer" },
-  { name: "description", content: site.description },
-];
+export const meta: MetaFunction = () => createSeoMeta({
+  title: "Victor Ginelli | Founder and full-stack product engineer",
+  description: site.description,
+  pathname: "/",
+});
 
 export default function Home() {
   return (

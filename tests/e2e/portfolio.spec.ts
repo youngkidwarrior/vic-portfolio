@@ -3,6 +3,14 @@ import { expect, test } from "@playwright/test";
 
 const routes = ["/", "/work/send", "/work/shenanigan", "/work/brightid", "/work/open-source", "/resume"];
 const caseStudyRoutes = routes.filter((route) => route.startsWith("/work/"));
+const socialPreviewRoutes = [
+  { route: "/", canonicalUrl: "https://victor.she.energy/", imageUrl: "https://victor.she.energy/og.png" },
+  { route: "/resume", canonicalUrl: "https://victor.she.energy/resume", imageUrl: "https://victor.she.energy/og.png" },
+  { route: "/work/send", canonicalUrl: "https://victor.she.energy/work/send", imageUrl: "https://victor.she.energy/images/work/send.jpg" },
+  { route: "/work/shenanigan", canonicalUrl: "https://victor.she.energy/work/shenanigan", imageUrl: "https://victor.she.energy/images/work/pants.jpg" },
+  { route: "/work/brightid", canonicalUrl: "https://victor.she.energy/work/brightid", imageUrl: "https://victor.she.energy/images/work/brightid-bot.jpg" },
+  { route: "/work/open-source", canonicalUrl: "https://victor.she.energy/work/open-source", imageUrl: "https://victor.she.energy/images/work/open-source.jpg" },
+];
 
 function seriousViolations(results: Awaited<ReturnType<AxeBuilder["analyze"]>>) {
   return results.violations.filter((violation) => violation.impact === "critical" || violation.impact === "serious");
@@ -39,6 +47,21 @@ for (const route of routes) {
     }
 
     expect(failures).toEqual([]);
+  });
+}
+
+for (const { route, canonicalUrl, imageUrl } of socialPreviewRoutes) {
+  test(`${route} prerenders complete social metadata`, async ({ request }) => {
+    const response = await request.get(route);
+    const html = await response.text();
+
+    expect(response.ok()).toBe(true);
+    expect(html).toContain(`<link rel="canonical" href="${canonicalUrl}"`);
+    expect(html).toContain(`<meta property="og:url" content="${canonicalUrl}"`);
+    expect(html).toContain(`<meta property="og:image" content="${imageUrl}"`);
+    expect(html).toContain(`<meta property="og:image:secure_url" content="${imageUrl}"`);
+    expect(html).toContain(`<meta name="twitter:card" content="summary_large_image"`);
+    expect(html).toContain(`<meta name="twitter:image" content="${imageUrl}"`);
   });
 }
 

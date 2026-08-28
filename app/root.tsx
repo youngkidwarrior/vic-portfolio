@@ -3,28 +3,17 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import { site } from "~/data/site";
+import { createSeoMeta } from "~/utils/seo";
 import "~/styles/app.css";
 import "@fontsource-variable/space-grotesk";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
 
-const socialPreviewImage = `${site.url}${site.socialImage}`;
-
-export const meta: MetaFunction = () => [
-  { title: `${site.name} | ${site.role}` },
-  { name: "description", content: site.description },
-  { property: "og:title", content: `${site.name} | ${site.role}` },
-  { property: "og:description", content: site.description },
-  { property: "og:type", content: "website" },
-  { property: "og:url", content: site.url },
-  { property: "og:image", content: socialPreviewImage },
-  { property: "og:image:width", content: "1200" },
-  { property: "og:image:height", content: "630" },
-  { property: "og:image:alt", content: "Victor Ginelli's Portfolio" },
-  { name: "twitter:card", content: "summary_large_image" },
-  { name: "twitter:image", content: socialPreviewImage },
-  { name: "twitter:image:alt", content: "Victor Ginelli's Portfolio" },
-];
+export const meta: MetaFunction = () => createSeoMeta({
+  title: `${site.name} | ${site.role}`,
+  description: site.description,
+  pathname: "/",
+});
 
 export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
