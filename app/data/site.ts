@@ -5,7 +5,7 @@ export const site = {
   github: "https://github.com/youngkidwarrior",
   resume: "/victor-ginelli-resume.pdf",
   description:
-    "Founding product engineer shipping polished experiences across payments, identity, mobile, infrastructure, and onchain systems.",
+    "Victor Ginelli designs and builds clear, polished products across payments, identity, and mobile.",
   availability: "Open to full-time founding product roles with remote teams globally.",
 };
 
@@ -134,6 +134,20 @@ export type OwnershipBlock = {
   privacyReview: string;
 };
 
+export type ProjectScreenshot = {
+  src: `/images/work/${string}.jpg`;
+  width: number;
+  height: number;
+  alt: string;
+  caption: string;
+};
+
+export type ClientStory = {
+  challenge: string;
+  contribution: string;
+  result: string;
+};
+
 export type Project = {
   slug: ProjectSlug;
   title: string;
@@ -143,6 +157,8 @@ export type Project = {
   summary: string;
   metrics: { value: string; label: string }[];
   links: { label: string; href: HttpsUrl }[];
+  screenshot: ProjectScreenshot;
+  clientStory: ClientStory;
   accent: "red" | "yellow" | "green" | "cobalt";
   brandMark: BrandMarkAsset | null;
   heroAsset: HeroAsset;
@@ -290,7 +306,7 @@ export const projects: Project[] = [
     title: "Send",
     period: "2023 - 2026",
     role: "Senior full-stack engineer",
-    lede: "A social payments product built across the card, wallet, mobile, and reliability layers.",
+    lede: "Led a passkey-secured card and mobile experience supporting more than $53M in transfers.",
     summary:
       "Led zero-to-one delivery of a passkey-secured virtual debit card and the systems that made complex onchain payments feel direct.",
     metrics: [
@@ -299,6 +315,18 @@ export const projects: Project[] = [
       { value: "15", label: "iOS releases in eight months" },
     ],
     links: [{ label: "Visit Send", href: "https://send.it" }],
+    screenshot: {
+      src: "/images/work/send.jpg",
+      width: 1120,
+      height: 630,
+      alt: "Send website showing a customer using the mobile payments product",
+      caption: "Send's consumer payments brand.",
+    },
+    clientStory: {
+      challenge: "Make digital payments feel familiar even when the systems underneath were new.",
+      contribution: "Victor led the virtual card and mobile experience across product, design, and engineering.",
+      result: "The work supported $53M+ in transfers, 70K+ passkeys, and 15 iOS releases.",
+    },
     accent: "cobalt",
     brandMark: brand(
       "SEND-BRAND-001",
@@ -402,7 +430,7 @@ export const projects: Project[] = [
     title: "Shenanigan",
     period: "2018 - 2023",
     role: "Founder and technical lead",
-    lede: "A founder-built ecosystem for aligning a community around contribution and ownership.",
+    lede: "Founded and led a community product that raised $100K+ and added a year of runway.",
     summary:
       "Raised community funding, assembled an eight-person team, and built applications, contracts, infrastructure, and governance from the ground up.",
     metrics: [
@@ -414,6 +442,18 @@ export const projects: Project[] = [
       { label: "Visit Shenanigan", href: "https://she.energy" },
       { label: "Visit PANTS", href: "https://pants.energy" },
     ],
+    screenshot: {
+      src: "/images/work/pants.jpg",
+      width: 720,
+      height: 576,
+      alt: "PANTS product page showing digital clothing available to buy",
+      caption: "PANTS turned community energy into added runway.",
+    },
+    clientStory: {
+      challenge: "Build a community-owned product and the organization needed to sustain it.",
+      contribution: "Victor founded the company, raised support, assembled an eight-person team, and shipped the product.",
+      result: "The community raised $100K+, and PANTS added 12 months of runway.",
+    },
     accent: "red",
     brandMark: brand(
       "SHEN-BRAND-001",
@@ -505,7 +545,7 @@ export const projects: Project[] = [
     title: "BrightID Bot",
     period: "2020 - 2023",
     role: "Project lead",
-    lede: "A weekend prototype grown into dependable public-good infrastructure.",
+    lede: "Turned a weekend prototype into a service that verified 11,000+ people in one year.",
     summary:
       "Turned an identity-verification bot into a production service and operated the deployment and dedicated network node behind it.",
     metrics: [
@@ -517,6 +557,18 @@ export const projects: Project[] = [
       { label: "Visit BrightID Bot", href: "https://bot.brightid.org" },
       { label: "Visit BrightID", href: "https://www.brightid.org" },
     ],
+    screenshot: {
+      src: "/images/work/brightid-bot.jpg",
+      width: 1120,
+      height: 630,
+      alt: "BrightID Bot dashboard for Discord community verification",
+      caption: "A simple dashboard for community verification.",
+    },
+    clientStory: {
+      challenge: "Help online communities verify unique people without collecting traditional identity data.",
+      contribution: "Victor turned a weekend prototype into a dependable public service.",
+      result: "BrightID Bot verified more than 11,000 people in its first year.",
+    },
     accent: "green",
     brandMark: brand(
       "BRIGHTID-BRAND-001",
@@ -591,7 +643,7 @@ export const projects: Project[] = [
     title: "Open source",
     period: "2018 - 2023",
     role: "Selected contributor",
-    lede: "Product, protocol, payment, and identity work across the Ethereum ecosystem.",
+    lede: "Shipped focused product improvements across four open-source ecosystems.",
     summary:
       "Shipped React, Solidity, payment, and identity improvements across SourceCred, Honeyswap, BrightID, and Colony.",
     metrics: [
@@ -604,6 +656,18 @@ export const projects: Project[] = [
       { label: "Honeyswap", href: "https://honeyswap.org" },
       { label: "Colony", href: "https://colony.io" },
     ],
+    screenshot: {
+      src: "/images/work/open-source.jpg",
+      width: 1120,
+      height: 630,
+      alt: "Victor Ginelli's GitHub profile with pinned open-source projects",
+      caption: "Public work across product and protocol ecosystems.",
+    },
+    clientStory: {
+      challenge: "Improve important public tools across payments, identity, and community coordination.",
+      contribution: "Victor contributed product and engineering work where focused changes could help users.",
+      result: "The work shipped across four open-source communities.",
+    },
     accent: "yellow",
     brandMark: null,
     heroAsset: hero(
