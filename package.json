@@ -16,19 +16,17 @@
   "dependencies": {
     "@fontsource-variable/space-grotesk": "^5.3.0",
     "@fontsource/ibm-plex-mono": "^5.3.0",
-    "@mdx-js/react": "latest",
     "@phosphor-icons/react": "latest",
     "@react-router/node": "7.9.5",
     "@react-router/serve": "7.9.5",
+    "isbot": "5.1.31",
     "motion": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-router": "7.9.5",
-    "isbot": "5.1.31"
+    "react-router": "7.9.5"
   },
   "devDependencies": {
     "@axe-core/playwright": "latest",
-    "@mdx-js/rollup": "latest",
     "@playwright/test": "latest",
     "@react-router/dev": "7.9.5",
     "@tailwindcss/vite": "latest",

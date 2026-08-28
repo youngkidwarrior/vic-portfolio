@@ -29,7 +29,7 @@ export function SelectedWorkComposition({ project, priority }: { project: Projec
         <h3>{project.title}</h3>
         <p className="project-lede">{project.lede}</p>
         <div className="metric-line">
-          {project.metrics.slice(0, 2).map((metric) => <div key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span></div>)}
+          {project.metrics.map((metric) => <div key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span></div>)}
         </div>
         <div className="simple-project-actions">
           <a className="text-link" aria-label={`Visit ${project.title}`} href={project.links[0].href} target="_blank" rel="noreferrer">Visit project <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>
