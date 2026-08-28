@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
+    "build:resume": "python3 scripts/build_resume.py",
+    "setup:resume": "python3 -m pip install --requirement requirements.txt",
     "build:sites": "bun run build && rm -rf ./dist && mkdir -p ./dist/server ./dist/client && cp -R ./build/client/. ./dist/client/ && cp ./sites-worker.mjs ./dist/server/index.js",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
