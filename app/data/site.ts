@@ -1,6 +1,8 @@
 export const site = {
   name: "Victor Ginelli",
   role: "Founding product engineer",
+  url: "https://victor-ginelli-portfolio-demo.victor52668.chatgpt.site",
+  socialImage: "/og.png",
   email: "victor@she.energy",
   github: "https://github.com/youngkidwarrior",
   resume: "/victor-ginelli-resume.pdf",
