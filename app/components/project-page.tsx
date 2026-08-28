@@ -32,10 +32,19 @@ export function ProjectPage({ project }: { project: Project }) {
           <div key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span></div>
         ))}
       </section>
-      <section className="case-story page-frame">
-        <div><h2>The challenge</h2><p>{project.clientStory.challenge}</p></div>
-        <div><h2>Victor's contribution</h2><p>{project.clientStory.contribution}</p></div>
-        <div><h2>The result</h2><p>{project.clientStory.result}</p></div>
+      <section className="contribution-section page-frame">
+        <header className="contribution-heading">
+          <p className="mono-label">Scope of work</p>
+          <h2>What Victor built</h2>
+        </header>
+        <ul className="contribution-list">
+          {project.contributions.map((contribution) => (
+            <li key={contribution.title}>
+              <h3>{contribution.title}</h3>
+              <p>{contribution.detail}</p>
+            </li>
+          ))}
+        </ul>
       </section>
       <section className="external-links page-frame">
         <h2>Visit the project</h2>

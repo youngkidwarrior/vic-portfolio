@@ -31,11 +31,7 @@ export type Project = {
   metrics: [{ value: string; label: string }, { value: string; label: string }];
   links: { label: string; href: HttpsUrl }[];
   screenshot: ProjectScreenshot;
-  clientStory: {
-    challenge: string;
-    contribution: string;
-    result: string;
-  };
+  contributions: { title: string; detail: string }[];
   accent: "red" | "yellow" | "green" | "cobalt";
 };
 
@@ -59,11 +55,28 @@ export const projects: Project[] = [
       alt: "Send website showing a customer using the mobile payments product",
       caption: "Send's consumer payments brand.",
     },
-    clientStory: {
-      challenge: "Make digital payments feel familiar even when the systems underneath were new.",
-      contribution: "Victor led the virtual card and mobile experience across product, design, and engineering.",
-      result: "The work supported $53M+ in transfers, 70K+ passkeys, and 15 iOS releases.",
-    },
+    contributions: [
+      {
+        title: "Virtual debit card",
+        detail: "Led the product from architecture through launch, connecting passkey ownership, identity checks, card issuance, funding, authentication, and card controls.",
+      },
+      {
+        title: "Community rewards",
+        detail: "Designed a gaming-resistant activity and token-distribution system that allocated 81M+ SEND using behavioral signals, eligibility rules, and dynamic reward limits.",
+      },
+      {
+        title: "Web and mobile platform",
+        detail: "Architected a shared foundation for web and native apps that supported 15 iOS releases, 1K+ Android downloads, 70K+ passkeys, and 20K Sendtags.",
+      },
+      {
+        title: "Reliable payment operations",
+        detail: "Moved core payment execution into durable workflows for transactions, confirmation, reconciliation, retries, activity updates, and notifications.",
+      },
+      {
+        title: "Social payments",
+        detail: "Expanded Send with group payments, conversational sends, public activity, reactions, richer transaction details, and cross-platform notifications.",
+      },
+    ],
     accent: "cobalt",
   },
   {
@@ -88,11 +101,20 @@ export const projects: Project[] = [
       alt: "PANTS product page showing digital clothing available to buy",
       caption: "PANTS turned community energy into added runway.",
     },
-    clientStory: {
-      challenge: "Build a community-owned product and the organization needed to sustain it.",
-      contribution: "Victor founded the company, raised support, assembled an eight-person team, and shipped the product.",
-      result: "The community raised $100K+, and PANTS added 12 months of runway.",
-    },
+    contributions: [
+      {
+        title: "Company and team",
+        detail: "Founded and bootstrapped the company, raised $100K+ from the community, and led six recurring contributors and two contractors.",
+      },
+      {
+        title: "PANTS",
+        detail: "Created a community fundraising and token-reward mechanism that extended the company's operating runway by 12 months.",
+      },
+      {
+        title: "Community governance",
+        detail: "Designed a decentralized system that connected governance, measurable participation, and stakeholder rewards.",
+      },
+    ],
     accent: "red",
   },
   {
@@ -117,11 +139,24 @@ export const projects: Project[] = [
       alt: "BrightID Bot dashboard for Discord community verification",
       caption: "A simple dashboard for community verification.",
     },
-    clientStory: {
-      challenge: "Help online communities verify unique people without collecting traditional identity data.",
-      contribution: "Victor turned a weekend prototype into a dependable public service.",
-      result: "BrightID Bot verified more than 11,000 people in its first year.",
-    },
+    contributions: [
+      {
+        title: "Prototype to product",
+        detail: "Turned a weekend hackathon prototype into a production identity-verification service for online communities.",
+      },
+      {
+        title: "Verification at scale",
+        detail: "Led the service as it verified more than 11,000 people in one year.",
+      },
+      {
+        title: "Deployment migration",
+        detail: "Moved the production service from Heroku to Railway for its next stage of operation.",
+      },
+      {
+        title: "BrightID infrastructure",
+        detail: "Operated a dedicated BrightID node supporting the bot's verification flow.",
+      },
+    ],
     accent: "green",
   },
   {
@@ -137,6 +172,7 @@ export const projects: Project[] = [
     links: [
       { label: "SourceCred", href: "https://sourcecred.io" },
       { label: "Honeyswap", href: "https://honeyswap.org" },
+      { label: "BrightID", href: "https://www.brightid.org" },
       { label: "Colony", href: "https://colony.io" },
     ],
     screenshot: {
@@ -147,11 +183,24 @@ export const projects: Project[] = [
       alt: "Victor Ginelli's GitHub profile with pinned open-source projects",
       caption: "Public work across product and protocol ecosystems.",
     },
-    clientStory: {
-      challenge: "Improve important public tools across payments, identity, and community coordination.",
-      contribution: "Victor contributed product and engineering work where focused changes could help users.",
-      result: "The work shipped across four open-source communities.",
-    },
+    contributions: [
+      {
+        title: "SourceCred",
+        detail: "Shipped product work supporting contributor rewards and community participation.",
+      },
+      {
+        title: "Honeyswap",
+        detail: "Contributed exchange fixes across the user-facing product and payment experience.",
+      },
+      {
+        title: "BrightID",
+        detail: "Improved identity-verification work within the open-source ecosystem.",
+      },
+      {
+        title: "Colony",
+        detail: "Contributed to DAO payment logic spanning application and smart-contract work.",
+      },
+    ],
     accent: "yellow",
   },
 ];
