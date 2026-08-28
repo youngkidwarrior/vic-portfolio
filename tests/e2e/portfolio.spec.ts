@@ -2,13 +2,43 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 const routes = ["/", "/work/send", "/work/shenanigan", "/work/brightid", "/work/open-source", "/resume"];
+const caseStudyRoutes = routes.filter((route) => route.startsWith("/work/"));
+
+function seriousViolations(results: Awaited<ReturnType<AxeBuilder["analyze"]>>) {
+  return results.violations.filter((violation) => violation.impact === "critical" || violation.impact === "serious");
+}
 
 for (const route of routes) {
   test(`${route} renders without serious accessibility violations`, async ({ page }) => {
     await page.goto(route);
     await expect(page.locator("h1")).toBeVisible();
     const results = await new AxeBuilder({ page }).analyze();
-    expect(results.violations.filter((violation) => violation.impact === "critical" || violation.impact === "serious")).toEqual([]);
+    expect(seriousViolations(results)).toEqual([]);
+  });
+
+  test(`${route} renders without runtime failures or broken local images`, async ({ page }) => {
+    const failures: string[] = [];
+    page.on("console", (message) => {
+      if (message.type() === "error") failures.push(`console: ${message.text()}`);
+    });
+    page.on("pageerror", (error) => failures.push(`page: ${error.message}`));
+    page.on("requestfailed", (request) => {
+      if (request.url().startsWith("http://127.0.0.1:4173")) {
+        failures.push(`request: ${request.url()} (${request.failure()?.errorText ?? "unknown"})`);
+      }
+    });
+
+    const response = await page.goto(route);
+    expect(response?.ok()).toBe(true);
+    await expect(page.locator("h1")).toHaveCount(1);
+
+    for (const image of await page.locator("img").all()) {
+      await image.scrollIntoViewIfNeeded();
+      await expect(image).toHaveJSProperty("complete", true);
+      expect(await image.evaluate((element) => (element as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+    }
+
+    expect(failures).toEqual([]);
   });
 }
 
@@ -29,19 +59,52 @@ test("theme selection persists across navigation", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 });
 
-test("dark theme remains accessible", async ({ page }) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: "Switch to dark theme" }).click();
-  const results = await new AxeBuilder({ page }).analyze();
-  expect(results.violations.filter((violation) => violation.impact === "critical" || violation.impact === "serious")).toEqual([]);
-});
+for (const route of routes) {
+  test(`${route} dark theme remains accessible`, async ({ page }) => {
+    await page.goto(route);
+    const themeButton = page.getByRole("button", { name: /Switch to (dark|light) theme/ });
+    if ((await page.locator("html").getAttribute("data-theme")) !== "dark") await themeButton.click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(seriousViolations(results)).toEqual([]);
+  });
+}
 
 test("reduced motion keeps the primary content visible", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("link", { name: "Start a conversation" }).first()).toBeVisible();
+  const atmosphere = page.locator(".atmospheric-art img").first();
+  await expect(atmosphere).toBeAttached();
+  expect(await atmosphere.evaluate((element) => getComputedStyle(element).transform)).toBe("none");
 });
+
+for (const route of caseStudyRoutes) {
+  test(`${route} foregrounds sourced evidence with reduced motion`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto(route);
+    await expect(page.locator('[data-priority="primary"]')).toBeVisible();
+    await expect(page.getByText("Source", { exact: true }).first()).toBeVisible();
+    const atmosphere = page.locator(".atmospheric-art img").first();
+    await expect(atmosphere).toBeAttached();
+    expect(await atmosphere.evaluate((element) => getComputedStyle(element).transform)).toBe("none");
+  });
+}
+
+for (const width of [320, 390, 620, 621, 900, 901]) {
+  test(`every route has no horizontal overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of routes) {
+      await page.goto(route);
+      const dimensions = await page.evaluate(() => ({
+        clientWidth: document.documentElement.clientWidth,
+        scrollWidth: document.documentElement.scrollWidth,
+      }));
+      expect(dimensions.scrollWidth, `${route} overflows at ${width}px`).toBeLessThanOrEqual(dimensions.clientWidth);
+    }
+  });
+}
 
 test("the PDF resume is available", async ({ request }) => {
   const response = await request.get("/victor-ginelli-resume.pdf");
@@ -54,7 +117,11 @@ test("mobile navigation opens and exposes all destinations", async ({ page }, te
   await page.goto("/");
   await page.getByRole("button", { name: "Toggle navigation" }).click();
   await expect(page.getByRole("navigation", { name: "Primary" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Work", exact: true })).toBeFocused();
   await expect(page.getByRole("link", { name: "Resume", exact: true })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Toggle navigation" })).toBeFocused();
+  await expect(page.getByRole("button", { name: "Toggle navigation" })).toHaveAttribute("aria-expanded", "false");
 });
 
 test("the built site does not expose private resume data", async ({ page }) => {
