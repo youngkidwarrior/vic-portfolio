@@ -27,14 +27,8 @@ export function ProjectPage({ project }: { project: Project }) {
           <figcaption>{project.screenshot.caption}</figcaption>
         </figure>
       </header>
-      <section className="metric-band page-frame" aria-label="Project outcomes">
-        {project.metrics.map((metric) => (
-          <div key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span></div>
-        ))}
-      </section>
       <section className="contribution-section page-frame">
         <header className="contribution-heading">
-          <p className="mono-label">Scope of work</p>
           <h2>What Victor built</h2>
         </header>
         <ul className="contribution-list">
@@ -47,7 +41,7 @@ export function ProjectPage({ project }: { project: Project }) {
         </ul>
       </section>
       <section className="external-links page-frame">
-        <h2>Visit the project</h2>
+        <h2>Project links</h2>
         <div>
           {project.links.map((link) => (
             <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <ArrowUpRight size="1em" weight="bold" aria-hidden /></a>

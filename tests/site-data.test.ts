@@ -21,16 +21,17 @@ describe("portfolio content model", () => {
     for (const source of recognition.supportingProof) expect(source.source).toMatch(/^https:\/\//);
   });
 
-  it("preserves the strongest public outcomes", () => {
-    expect(getProject("send")?.metrics[0]).toEqual({ value: "$53M+", label: "onchain transfer volume" });
-    expect(getProject("shenanigan")?.metrics[0]).toEqual({ value: "$100K+", label: "community support raised" });
-    expect(getProject("brightid")?.metrics[0]).toEqual({ value: "11K+", label: "people verified in one year" });
-    expect(getProject("open-source")?.metrics[0]).toEqual({ value: "4", label: "ecosystems represented" });
+  it("keeps outcomes in human-readable project copy instead of a metrics model", () => {
+    expect(getProject("send")?.lede).toContain("$53M+");
+    expect(getProject("shenanigan")?.contributions.map(({ detail }) => detail).join(" ")).toContain("$100K+");
+    expect(getProject("brightid")?.lede).toContain("11,000+");
+    expect(getProject("open-source")?.lede).toContain("four open-source ecosystems");
+    expect(JSON.stringify(projects)).not.toMatch(/"metrics"/);
   });
 
   it("represents the complete primary contribution scope from the resume", () => {
     expect(getProject("send")?.contributions).toHaveLength(5);
-    expect(getProject("shenanigan")?.contributions).toHaveLength(3);
+    expect(getProject("shenanigan")?.contributions).toHaveLength(4);
     expect(getProject("brightid")?.contributions).toHaveLength(4);
     expect(getProject("open-source")?.contributions).toHaveLength(4);
     expect(getProject("open-source")?.links.map(({ label }) => label)).toEqual([
@@ -48,7 +49,7 @@ describe("portfolio content model", () => {
         expect(contribution.detail.trim()).not.toBe("");
       }
     }
-    expect(JSON.stringify(projects)).not.toMatch(/clientStory|challenge/i);
+    expect(JSON.stringify(projects)).not.toMatch(/"clientStory"|"challenge":/i);
   });
 
   it("contains no retired review workflow or private phone number", () => {

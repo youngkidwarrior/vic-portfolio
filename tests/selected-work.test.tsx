@@ -27,16 +27,14 @@ describe("Campaign 4 selected work", () => {
     }
   });
 
-  it("limits every project to two outcomes and visitor-facing copy", () => {
+  it("shows each project's full contribution scope without a separate metrics treatment", () => {
     const { container } = render(
       <MemoryRouter>
         {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
       </MemoryRouter>,
     );
 
-    for (const projectSection of container.querySelectorAll(".simple-project")) {
-      expect(projectSection.querySelectorAll(".metric-line > div").length).toBeLessThanOrEqual(2);
-    }
+    expect(container.querySelector(".metric-line")).not.toBeInTheDocument();
     for (const project of projects) {
       const projectSection = screen.getByRole("heading", { name: project.title }).closest(".simple-project");
       expect(projectSection?.querySelectorAll(".project-contributions > li")).toHaveLength(project.contributions.length);
@@ -51,7 +49,7 @@ describe("Campaign 4 selected work", () => {
     expect(container).not.toHaveTextContent(/challenge|contribution:/i);
   });
 
-  it("offers a direct live-project action for every project", () => {
+  it("uses the screenshot as the live-project action and offers project details", () => {
     render(
       <MemoryRouter>
         {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
@@ -59,14 +57,13 @@ describe("Campaign 4 selected work", () => {
     );
 
     for (const project of projects) {
-      expect(screen.getByRole("link", { name: `Visit ${project.title}` })).toHaveAttribute(
-        "href",
-        project.links[0].href,
-      );
       expect(screen.getByRole("link", { name: `Visit the website shown for ${project.title}` })).toHaveAttribute(
         "href",
         project.screenshot.href,
       );
+      const section = screen.getByRole("heading", { name: project.title }).closest(".simple-project");
+      expect(section).not.toHaveTextContent("Visit project");
+      expect(section).toHaveTextContent("Project details");
     }
   });
 });
