@@ -37,7 +37,6 @@
     "@types/node": "22",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@vitejs/plugin-react": "latest",
     "jsdom": "26.1.0",
     "tailwindcss": "latest",
     "typescript": "5.9.3",
