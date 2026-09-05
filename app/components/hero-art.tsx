@@ -1,6 +1,5 @@
 import type { AnimationSequence } from "motion/react";
 import { useId } from "react";
-import { ArtworkReplay } from "~/components/artwork-replay";
 import { useArtworkPlayback } from "~/components/use-artwork-playback";
 
 const artwork = "/images/art/hero-poster.webp";
@@ -23,10 +22,9 @@ const paths = [
 
 export function HeroArt() {
   const id = useId();
-  const { scope, ...playback } = useArtworkPlayback<SVGSVGElement>(artwork, sequence);
+  const { scope } = useArtworkPlayback<SVGSVGElement>(artwork, sequence);
 
-  return <>
-    <svg ref={scope} className="hero-art-media hero-convergence" viewBox="0 150 1586 760" aria-hidden="true" focusable="false">
+  return <svg ref={scope} className="hero-art-media hero-convergence" viewBox="0 150 1586 760" aria-hidden="true" focusable="false">
       <defs>
         {paths.map(({ ink, shape }) => <clipPath key={ink} id={`${id}-${ink}`}><path d={shape} /></clipPath>)}
         <clipPath id={`${id}-hub`}><path d="M1000 0H1586V992H1000Z" /></clipPath>
@@ -38,7 +36,5 @@ export function HeroArt() {
         </g>
       ))}
       <image className="convergence-hub" clipPath={`url(#${id}-hub)`} href={artwork} width="1586" height="992" />
-    </svg>
-    <ArtworkReplay name="Convergence" {...playback} />
-  </>;
+  </svg>;
 }

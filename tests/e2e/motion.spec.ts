@@ -104,16 +104,18 @@ test("each completed project print stays assembled when scrolling and its screen
   for (const slug of ["send", "shenanigan", "brightid", "open-source"]) {
     const artwork = page.locator(`[data-artwork="${slug}"]`);
     await artwork.scrollIntoViewIfNeeded();
-    await expect.poll(() => isReadable(artwork)).toBe(true);
     const media = artwork.locator("[data-art-layer]");
-    const transforms = () => media.evaluateAll((elements) => elements.map((element) => getComputedStyle(element).transform).join("|"));
-    const replay = artwork.getByRole("button", { name: /Replay/ });
-    await replay.click();
+    const settled = () => media.evaluateAll((elements) => elements.every((element) => {
+      const matrix = new DOMMatrixReadOnly(getComputedStyle(element).transform);
+      return Math.abs(matrix.m41) < 0.1 && Math.abs(matrix.m42) < 0.1
+        && Math.abs(matrix.m11 - 1) < 0.001 && Math.abs(matrix.m22 - 1) < 0.001;
+    }));
     await expect.poll(() => media.first().evaluate(element => Number(getComputedStyle(element).opacity))).toBeLessThan(0.99);
+    await expect.poll(() => isReadable(artwork)).toBe(true);
     for (const layer of await media.all()) await expect(layer).toHaveCSS("opacity", "1");
-    const initial = await transforms();
+    await expect.poll(settled).toBe(true);
     await page.evaluate(() => window.scrollBy({ top: 100, behavior: "instant" }));
-    await expect.poll(transforms).toBe(initial);
+    await expect.poll(settled).toBe(true);
     await expect(artwork.locator("..").getByRole("img")).toHaveCSS("transform", "none");
   }
 });
