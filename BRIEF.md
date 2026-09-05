@@ -19,6 +19,15 @@ The portfolio presents Victor Ginelli as a founder and full-stack product engine
 - Layouts avoid offset card effects, decorative interface chrome, and dense diagrams.
 - Every section has one clear focus and no more copy than a nontechnical reader needs.
 
+## Motion direction
+
+- The portfolio is kinetic throughout. Pointer-reactive depth and coordinated movement demonstrate frontend craft while Victor and the work remain the focus.
+- Desktop interaction uses bounded, spring-based pointer response. Touch devices receive scroll and tap equivalents without orientation permissions or scroll hijacking.
+- Documentary project screenshots stay straight and readable. Movement belongs to surrounding ink, framing, hierarchy, and interaction feedback.
+- Motion is an intentional product dependency. Optimize its delivery and measure runtime behavior; removing it solely for a smaller bundle does not satisfy the visual goal.
+- Content remains readable before hydration, when JavaScript is unavailable, and with reduced motion enabled. Motion never holds navigation or reading behind an entrance sequence.
+- Browser review covers entry, pointer movement and reset, touch response, route navigation, and both themes. Automated checks establish functional floors; Victor judges the final visual taste.
+
 ## Quality bar
 
 - The site remains accessible, responsive, and legible across desktop and mobile widths.
@@ -31,4 +40,5 @@ The portfolio presents Victor Ginelli as a founder and full-stack product engine
 
 - 2026-08-27: The Montreal editorial palette and textured paper treatment define the standing visual direction because they best reflect the approved references.
 - 2026-08-27: Project sections present the totality of Victor's primary contributions because a single challenge/contribution/result frame understates the work.
+- 2026-09-05: The original interview explicitly selected “Kinetic throughout,” “Pointer-reactive system,” and “Scroll and tap equivalents.” The owner reaffirmed that ambition after an audit removed Motion. The Montréal palette, human-centered opening, and concise content remain the standing visual constraints.
 - 2026-08-27: Victor's identity and resume lead the site because the portfolio is human-centered rather than product-index-centered.

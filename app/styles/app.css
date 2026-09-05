@@ -95,7 +95,7 @@ h1, h2, h3, .footer-email { overflow-wrap: anywhere; }
 .section-intro { max-width: 920px; }
 .section-intro h2, .recognition-copy h2 { margin: .8rem 0 0; font-size: clamp(2.6rem, 5vw, 5.2rem); line-height: .96; letter-spacing: -.055em; text-wrap: balance; }
 .project-list { margin-top: clamp(2.75rem, 5.5vw, 4.75rem); }
-.project-row { --project-color: var(--accent); --project-ink: var(--accent); position: relative; isolation: isolate; padding-block: clamp(3rem, 6vw, 5.25rem); border-top: .45rem solid var(--project-color); }
+.project-row { --project-color: var(--accent); --project-ink: var(--accent); position: relative; isolation: isolate; padding-block: clamp(3rem, 6vw, 5.25rem); }
 .project-red { --project-color: var(--red); --project-ink: var(--red-ink); }
 .project-yellow { --project-color: var(--yellow); --project-ink: var(--gold-ink); }
 .project-green { --project-color: var(--green); --project-ink: var(--green-ink); }
@@ -200,7 +200,7 @@ h1, h2, h3, .footer-email { overflow-wrap: anywhere; }
 .hero-portrait { width: min(100%, 520px); justify-self: end; border-top-width: .45rem; border-top-color: var(--red); }
 .section-intro h2 { max-width: 12ch; }
 .simple-project { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(300px, .72fr); gap: clamp(2.5rem, 6vw, 7rem); align-items: center; }
-.project-row:nth-child(even) .project-screenshot { order: 2; }
+.project-row:nth-child(even) .project-visual { order: 2; }
 .project-row:nth-child(even) .project-copy { order: 1; }
 .project-screenshot, .case-screenshot { margin: 0; padding-top: .75rem; border-top: 2px solid var(--project-color, var(--accent)); }
 .project-image-link { display: block; }
@@ -225,7 +225,7 @@ h1, h2, h3, .footer-email { overflow-wrap: anywhere; }
 @media (max-width: 900px) {
   .hero-portrait { width: min(78%, 520px); justify-self: end; }
   .simple-project { grid-template-columns: 1fr; }
-  .project-row:nth-child(even) .project-screenshot,
+  .project-row:nth-child(even) .project-visual,
   .project-row:nth-child(even) .project-copy { order: initial; }
   .project-screenshot { width: 100%; }
   .contribution-list li { grid-template-columns: 1fr; gap: 1rem; }
@@ -237,4 +237,26 @@ h1, h2, h3, .footer-email { overflow-wrap: anywhere; }
   .case-title-grid h1 { font-size: clamp(3rem, 18.5vw, 7rem); }
   .project-contributions { gap: .35rem .9rem; }
   .contribution-list li { padding: 1.5rem 0; }
+}
+
+/* Ink separates behind the real portrait; the face and reading surface stay still. */
+.portrait-stage { position: relative; isolation: isolate; }
+.portrait-stage img { position: relative; z-index: 2; }
+.portrait-ink { position: absolute; inset: 0; pointer-events: none; mask: url('/images/victor-portrait.webp') center / 100% 100% no-repeat; }
+.portrait-ink-blue { background: var(--accent); left: -14px; right: 14px; top: -8px; bottom: 8px; opacity: .85; }
+.portrait-ink-red { background: var(--red); left: 12px; right: -12px; top: 7px; bottom: -7px; opacity: .9; }
+.button svg, .text-link svg, .footer-email svg, .back-link svg { transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
+.button:hover svg, .text-link:hover svg, .footer-email:hover svg { transform: translate(2px, -2px); }
+.back-link:hover svg { transform: translateX(-3px); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal-motion, [data-hero-line], .portrait-ink { opacity: 1 !important; transform: none !important; }
+  .button, .footer-email, .button svg, .text-link svg, .footer-email svg, .back-link svg { transform: none !important; }
+}
+.project-rule { position: absolute; inset: 0 0 auto; height: .45rem; transform-origin: left center; background: var(--project-color); pointer-events: none; }
+.project-visual { min-width: 0; }
+@media (max-width: 620px) {
+  .portrait-stage { margin-inline: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-rule, .project-copy h3 { transform: none !important; }
 }
