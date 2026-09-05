@@ -47,7 +47,7 @@ export function SiteHeader() {
         }}
       >Skip to content</Link>
       <div className="nav-shell">
-        <NavLink className="brand" to="/" aria-label="Victor Ginelli home">
+        <NavLink className="brand" to="/" aria-label="VG, Victor Ginelli home">
           <span className="brand-mark">VG</span>
           <span>Victor Ginelli</span>
         </NavLink>

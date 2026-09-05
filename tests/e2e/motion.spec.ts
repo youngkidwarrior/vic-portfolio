@@ -17,6 +17,70 @@ async function isReadable(locator: Locator) {
   });
 }
 
+test("Convergence assembles around a fixed hub and holds beyond the study loop", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const art = page.locator(".hero-convergence");
+  await expect(art).toBeVisible();
+  await art.scrollIntoViewIfNeeded();
+  const samples = await art.evaluate(async (element) => {
+    const frames: { time: number; bands: { x: number; opacity: number }[]; hubTransform: string; hubOpacity: string }[] = [];
+    const start = performance.now();
+    await new Promise<void>((resolve) => {
+      const sample = () => {
+        const hub = getComputedStyle(element.querySelector(".convergence-hub")!);
+        frames.push({ time: performance.now() - start,
+          bands: Array.from(element.querySelectorAll(".convergence-band")).map((band) => {
+            const style = getComputedStyle(band);
+            return { x: new DOMMatrixReadOnly(style.transform).m41, opacity: Number(style.opacity) };
+          }), hubTransform: hub.transform, hubOpacity: hub.opacity });
+        if (performance.now() - start < 6500) requestAnimationFrame(sample);
+        else resolve();
+      };
+      requestAnimationFrame(sample);
+    });
+    return frames;
+  });
+  expect(samples.some((frame) => frame.bands.some((band) => Math.abs(band.x) > 1))).toBe(true);
+  expect(samples.every((frame) => frame.hubTransform === "none" && frame.hubOpacity === "1")).toBe(true);
+  const held = samples.filter((frame) => frame.time > 3500);
+  expect(held.length).toBeGreaterThan(0);
+  expect(held.every((frame) => frame.bands.length === 4 && frame.bands.every((band) => Math.abs(band.x) < 0.1 && band.opacity === 1))).toBe(true);
+  await expect(page.getByRole("heading", { level: 1, name: "Victor Ginelli" })).toBeVisible();
+});
+
+test("reduced motion completes Convergence immediately without replaying it", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const art = page.locator(".hero-convergence");
+  await art.scrollIntoViewIfNeeded();
+  await expect.poll(async () => Math.abs((await translation(page.locator(".convergence-green"))).x)).toBeGreaterThan(1);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const band of await page.locator(".convergence-band").all()) {
+    await expect(band).toHaveCSS("transform", "none");
+    await expect(band).toHaveCSS("opacity", "1");
+  }
+  await expect(page.locator(".convergence-rest")).toHaveCSS("opacity", "1");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  const held = await art.evaluate(async (element) => {
+    const start = performance.now();
+    return new Promise<string[]>((resolve) => {
+      const sample = () => {
+        const changed = Array.from(element.querySelectorAll(".convergence-band, .convergence-rest")).flatMap((layer) => {
+          const style = getComputedStyle(layer);
+          return Number(style.opacity) < 1 || Math.abs(new DOMMatrixReadOnly(style.transform).m41) > 0.1
+            ? [`${layer.classList}: opacity=${style.opacity}; transform=${style.transform}; attributes=${layer.getAttribute("opacity")}/${layer.getAttribute("transform")}`] : [];
+        });
+        if (changed.length) resolve(changed);
+        else if (performance.now() - start >= 2000) resolve([]);
+        else requestAnimationFrame(sample);
+      };
+      requestAnimationFrame(sample);
+    });
+  });
+  expect(held).toEqual([]);
+});
+
 test("generated artwork visibly frames the hero and every project", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   const loadedArt = new Set<string>();
@@ -34,18 +98,22 @@ test("generated artwork visibly frames the hero and every project", async ({ pag
   }
 });
 
-test("each project print responds to scrolling while its screenshot stays flat", async ({ page }) => {
+test("each completed project print stays assembled when scrolling and its screenshot stays flat", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   for (const slug of ["send", "shenanigan", "brightid", "open-source"]) {
     const artwork = page.locator(`[data-artwork="${slug}"]`);
     await artwork.scrollIntoViewIfNeeded();
     await expect.poll(() => isReadable(artwork)).toBe(true);
-    const media = artwork.locator("[data-art-media]");
+    const media = artwork.locator("[data-art-layer]");
     const transforms = () => media.evaluateAll((elements) => elements.map((element) => getComputedStyle(element).transform).join("|"));
+    const replay = artwork.getByRole("button", { name: /Replay/ });
+    await replay.click();
+    await expect.poll(() => media.first().evaluate(element => Number(getComputedStyle(element).opacity))).toBeLessThan(0.99);
+    for (const layer of await media.all()) await expect(layer).toHaveCSS("opacity", "1");
     const initial = await transforms();
     await page.evaluate(() => window.scrollBy({ top: 100, behavior: "instant" }));
-    await expect.poll(transforms).not.toBe(initial);
+    await expect.poll(transforms).toBe(initial);
     await expect(artwork.locator("..").getByRole("img")).toHaveCSS("transform", "none");
   }
 });
@@ -59,16 +127,15 @@ test("portrait ink follows the pointer and returns while the photograph stays st
   const ink = page.locator(".portrait-ink-blue");
   const artwork = page.locator(".hero-art-plane");
   const initial = await translation(ink);
-  const artworkInitial = await translation(artwork);
   const bounds = await portrait.boundingBox();
   expect(bounds).not.toBeNull();
   await page.mouse.move(bounds!.x + bounds!.width * 0.8, bounds!.y + bounds!.height * 0.3);
   await expect.poll(async () => (await translation(ink)).x - initial.x).toBeGreaterThan(5);
-  await expect.poll(async () => (await translation(artwork)).x - artworkInitial.x).toBeGreaterThan(5);
+  await expect(artwork).toHaveCSS("transform", "none");
   await expect(portrait).toHaveCSS("transform", "none");
   await page.mouse.move(10, 10);
   await expect.poll(async () => Math.abs((await translation(ink)).x - initial.x)).toBeLessThan(0.5);
-  await expect.poll(async () => Math.abs((await translation(artwork)).x - artworkInitial.x)).toBeLessThan(0.5);
+  await expect(artwork).toHaveCSS("transform", "none");
 });
 
 test("touch scrolling moves portrait ink without tilting the photograph", async ({ page, isMobile }) => {
@@ -78,10 +145,9 @@ test("touch scrolling moves portrait ink without tilting the photograph", async 
   const ink = page.locator(".portrait-ink-blue");
   const artwork = page.locator(".hero-art-plane");
   const initial = await translation(ink);
-  const artworkInitial = await translation(artwork);
   await page.evaluate(() => window.scrollTo({ top: 220, behavior: "instant" }));
   await expect.poll(async () => Math.abs((await translation(ink)).y - initial.y)).toBeGreaterThan(1);
-  await expect.poll(async () => Math.abs((await translation(artwork)).y - artworkInitial.y)).toBeGreaterThan(1);
+  await expect(artwork).toHaveCSS("transform", "none");
   await expect(page.getByRole("img", { name: "Portrait of Victor Ginelli" })).toHaveCSS("transform", "none");
 });
 
@@ -145,7 +211,10 @@ test.describe("motion review", () => {
     await page.evaluate(() => document.fonts.ready);
     const portrait = page.getByRole("img", { name: "Portrait of Victor Ginelli" });
     await expect(portrait).toHaveJSProperty("complete", true);
-    await expect.poll(async () => Math.abs((await translation(page.locator("[data-hero-art-entry]"))).y)).toBeLessThan(0.1);
+    await page.locator(".hero-convergence").scrollIntoViewIfNeeded();
+    await expect.poll(async () => Math.abs((await translation(page.locator(".convergence-green"))).x)).toBeLessThan(0.1);
+    await expect(page.locator(".convergence-rest")).toHaveCSS("opacity", "1");
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     await page.screenshot({ path: testInfo.outputPath("hero-light.png") });
     if (!isMobile) {
       const bounds = await portrait.boundingBox();
@@ -180,6 +249,7 @@ test.describe("motion review", () => {
       await expect.poll(() => isReadable(row.getByRole("link", { name: "Project details" }))).toBe(true);
       await artwork.scrollIntoViewIfNeeded();
       await expect.poll(() => isReadable(artwork)).toBe(true);
+      for (const layer of await artwork.locator("[data-art-layer]").all()) await expect(layer).toHaveCSS("opacity", "1");
       await row.screenshot({ path: testInfo.outputPath(`${slug}-chapter.png`) });
     }
   });

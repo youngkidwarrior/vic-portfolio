@@ -30,6 +30,8 @@ The portfolio presents Victor Ginelli as a founder and full-stack product engine
 - The generated convergence, Send, Shenanigan, BrightID, and open-source prints remain visible supporting artwork. Hero and project choreography responds to their composition while the real portrait, project screenshots, and copy remain primary.
 - Project details carry the screenshot and colored framing into the case study when the browser supports shared transitions. Returning from an internally opened project restores the originating position; direct case-study entries retain an All work destination.
 - Artwork media remains replaceable independently of page choreography, so future animated assets can use the same framing and accessibility policy.
+- The hero's Convergence entrance assembles the colored paths once, keeps the central ring and arrow intact, and holds the completed print. It begins when visible and resolves immediately to the original artwork with reduced motion.
+- Generated prints appear enlarged as background accents around the portrait and authentic screenshots, with enough exposed ink for their motion to read. They do not occupy separate foreground panels or compete with Victor and the work. Timed assembly continues while the visitor holds the page still; scrolling may reveal the artwork but does not scrub its playback. A discreet replay control allows another viewing. Automatic sequences settle within five seconds, and reduced motion presents the completed print without playback controls.
 
 ## Quality bar
 
