@@ -1,13 +1,14 @@
 import { List, X } from "@phosphor-icons/react";
 import * as m from "motion/react-m";
 import { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import { ThemeToggle } from "~/components/theme-toggle";
 import { useMotionSettings } from "~/components/motion-system";
 
 const navigationId = "primary-navigation";
 
 export function SiteHeader() {
+  const { pathname, search } = useLocation();
   const { reducedMotion } = useMotionSettings();
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -36,7 +37,15 @@ export function SiteHeader() {
 
   return (
     <header className="site-header">
-      <a className="skip-link" href="#main-content">Skip to content</a>
+      <Link
+        className="skip-link"
+        to={{ pathname, search, hash: "#main-content" }}
+        onClick={(event) => {
+          if (!event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+            document.getElementById("main-content")?.focus({ preventScroll: true });
+          }
+        }}
+      >Skip to content</Link>
       <div className="nav-shell">
         <NavLink className="brand" to="/" aria-label="Victor Ginelli home">
           <span className="brand-mark">VG</span>
@@ -44,7 +53,7 @@ export function SiteHeader() {
         </NavLink>
         <nav id={navigationId} className={open ? "primary-nav is-open" : "primary-nav"} aria-label="Primary">
           {nav.map(([label, href], index) => (
-            <a ref={index === 0 ? firstLinkRef : undefined} key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
+            <Link ref={index === 0 ? firstLinkRef : undefined} key={href} to={href} onClick={() => setOpen(false)}>{label}</Link>
           ))}
           <a href="mailto:victor@she.energy" onClick={() => setOpen(false)}>Contact</a>
         </nav>

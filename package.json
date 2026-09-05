@@ -15,7 +15,7 @@
     "test:e2e": "bun run build && playwright test",
     "check": "bun run typecheck && bun run test && bun run build",
     "test:e2e:built": "playwright test",
-    "test:motion": "bun run build && MOTION_REVIEW=1 playwright test tests/e2e/motion.spec.ts",
+    "test:motion": "bun run build && MOTION_REVIEW=1 playwright test tests/e2e/motion.spec.ts tests/e2e/project-transitions.spec.ts",
     "check:all": "bun run check && bun run test:e2e:built",
     "report:assets": "bun scripts/asset-report.mjs"
   },

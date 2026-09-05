@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
+import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ProjectRow } from "~/components/project-row";
 import { projects } from "~/data/site";
@@ -15,9 +15,7 @@ afterEach(cleanup);
 describe("selected work", () => {
   it("gives every project one authentic screenshot and one concise composition", () => {
     const { container } = render(
-      <MemoryRouter>
-        {projects.map((project) => <ProjectRow key={project.slug} project={project} />)}
-      </MemoryRouter>,
+      <RouterProvider router={createMemoryRouter([{ path: "/", element: <>{projects.map((project) => <ProjectRow key={project.slug} project={project} />)}</> }])} />,
     );
 
     expect(container.querySelectorAll("[data-composition='project-showcase']")).toHaveLength(4);
@@ -29,9 +27,7 @@ describe("selected work", () => {
 
   it("shows each project's full contribution scope without a separate metrics treatment", () => {
     const { container } = render(
-      <MemoryRouter>
-        {projects.map((project) => <ProjectRow key={project.slug} project={project} />)}
-      </MemoryRouter>,
+      <RouterProvider router={createMemoryRouter([{ path: "/", element: <>{projects.map((project) => <ProjectRow key={project.slug} project={project} />)}</> }])} />,
     );
 
     expect(container.querySelector(".metric-line")).not.toBeInTheDocument();
@@ -51,9 +47,7 @@ describe("selected work", () => {
 
   it("uses the screenshot as the live-project action and offers project details", () => {
     render(
-      <MemoryRouter>
-        {projects.map((project) => <ProjectRow key={project.slug} project={project} />)}
-      </MemoryRouter>,
+      <RouterProvider router={createMemoryRouter([{ path: "/", element: <>{projects.map((project) => <ProjectRow key={project.slug} project={project} />)}</> }])} />,
     );
 
     for (const project of projects) {

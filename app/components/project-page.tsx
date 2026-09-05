@@ -1,12 +1,14 @@
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react";
 import { Link } from "react-router";
+import { useProjectTransition } from "~/components/project-transition";
 import type { Project } from "~/data/site";
 
 export function ProjectPage({ project }: { project: Project }) {
+  const transition = useProjectTransition(project.slug);
   return (
     <article className={`case-study project-${project.accent}`}>
       <header className="case-hero page-frame">
-        <Link className="back-link" to="/#work"><ArrowLeft size="1em" weight="bold" aria-hidden /> All work</Link>
+        <Link className="back-link" {...transition.backLinkProps}><ArrowLeft size="1em" weight="bold" aria-hidden /> All work</Link>
         <div className="case-title-grid">
           <div>
             <p className="mono-label">{project.period} / {project.role}</p>
@@ -15,6 +17,7 @@ export function ProjectPage({ project }: { project: Project }) {
           </div>
         </div>
         <figure className="case-screenshot">
+          <span aria-hidden className="project-transition-frame" style={transition.frameStyle} />
           <a
             className="project-image-link"
             href={project.screenshot.href}
@@ -22,7 +25,7 @@ export function ProjectPage({ project }: { project: Project }) {
             rel="noreferrer"
             aria-label={`Visit the website shown for ${project.title}`}
           >
-            <img src={project.screenshot.src} alt={project.screenshot.alt} width={project.screenshot.width} height={project.screenshot.height} decoding="async" />
+            <img style={transition.imageStyle} src={project.screenshot.src} alt={project.screenshot.alt} width={project.screenshot.width} height={project.screenshot.height} decoding="async" />
           </a>
           <figcaption>{project.screenshot.caption}</figcaption>
         </figure>

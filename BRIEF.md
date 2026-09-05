@@ -27,6 +27,9 @@ The portfolio presents Victor Ginelli as a founder and full-stack product engine
 - Motion is an intentional product dependency. Optimize its delivery and measure runtime behavior; removing it solely for a smaller bundle does not satisfy the visual goal.
 - Content remains readable before hydration, when JavaScript is unavailable, and with reduced motion enabled. Motion never holds navigation or reading behind an entrance sequence.
 - Browser review covers entry, pointer movement and reset, touch response, route navigation, and both themes. Automated checks establish functional floors; Victor judges the final visual taste.
+- The generated convergence, Send, Shenanigan, BrightID, and open-source prints remain visible supporting artwork. Hero and project choreography responds to their composition while the real portrait, project screenshots, and copy remain primary.
+- Project details carry the screenshot and colored framing into the case study when the browser supports shared transitions. Returning from an internally opened project restores the originating position; direct case-study entries retain an All work destination.
+- Artwork media remains replaceable independently of page choreography, so future animated assets can use the same framing and accessibility policy.
 
 ## Quality bar
 

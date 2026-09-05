@@ -1,0 +1,84 @@
+/* The full print moves as one replaceable media plane behind Victor. */
+.hero {
+  /* Keep the blend inside the hero, with the same paper under every layer. */
+  background-color: var(--canvas);
+  background-image: var(--paper-grain);
+  background-size: 8px 8px, 11px 11px, auto;
+}
+
+.hero-art-scene {
+  position: absolute;
+  z-index: 0;
+  inset: 0 calc(var(--pad) * -1) 0 57%;
+  overflow: clip;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  mask-image:
+    linear-gradient(90deg, transparent, #000 18%, #000 92%, transparent),
+    linear-gradient(0deg, transparent, #000 14%, #000 90%, transparent);
+  mask-composite: intersect;
+}
+
+.hero-art-plane {
+  position: absolute;
+  inset: 3% -31% -2% -19%;
+  transform-origin: 70% 50%;
+}
+
+.hero-art-entry { width: 100%; height: 100%; }
+
+.hero-art-media {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 58% 50%;
+  filter: brightness(1.04) contrast(1.05);
+}
+
+.hero .hero-portrait {
+  position: relative;
+  z-index: 1;
+  border-top: 0;
+  padding-top: 1.2rem;
+}
+
+.hero-portrait-rule {
+  position: absolute;
+  inset: 0 0 auto;
+  height: .45rem;
+  background: var(--red);
+  transform-origin: right center;
+}
+
+:root[data-theme="dark"] .hero-art-scene {
+  mix-blend-mode: screen;
+  opacity: .86;
+}
+
+:root[data-theme="dark"] .hero-art-media {
+  filter: brightness(1.04) contrast(1.05) invert(1) hue-rotate(180deg);
+}
+
+@media (max-width: 900px) {
+  .hero-art-scene {
+    inset: auto calc(var(--pad) * -1) 4.5rem calc(var(--pad) * -1);
+    height: clamp(320px, 70vw, 570px);
+    mask-image:
+      linear-gradient(90deg, transparent, #000 9%, #000 94%, transparent),
+      linear-gradient(0deg, transparent, #000 12%, #000 87%, transparent);
+  }
+
+  .hero-art-plane { inset: -6% -12% -7% -20%; }
+  .hero-art-media { object-position: 48% 50%; }
+}
+
+@media (max-width: 620px) {
+  .hero-art-scene { bottom: 4rem; height: 94vw; }
+  .hero-art-plane { inset: -3% -27% -8% -37%; }
+  .hero-art-media { object-position: 50% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-art-plane, .hero-art-entry, .hero-portrait-rule { transform: none !important; }
+}
