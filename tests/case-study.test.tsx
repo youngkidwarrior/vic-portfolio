@@ -1,5 +1,5 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
+import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, describe, expect, it } from "vitest";
 import { ProjectPage } from "~/components/project-page";
 import { projects } from "~/data/site";
@@ -10,7 +10,7 @@ describe("case studies", () => {
   it("uses a screenshot-led account of Victor's complete project scope", () => {
     for (const project of projects) {
       const { container, unmount } = render(
-        <MemoryRouter><ProjectPage project={project} /></MemoryRouter>,
+        <RouterProvider router={createMemoryRouter([{ path: "/", element: <ProjectPage project={project} /> }])} />,
       );
 
       expect(screen.getByRole("img", { name: project.screenshot.alt })).toHaveAttribute("src", project.screenshot.src);
@@ -33,7 +33,7 @@ describe("case studies", () => {
   });
 
   it("keeps internal review vocabulary out of the story", () => {
-    const { container } = render(<MemoryRouter><ProjectPage project={projects[0]} /></MemoryRouter>);
+    const { container } = render(<RouterProvider router={createMemoryRouter([{ path: "/", element: <ProjectPage project={projects[0]} /> }])} />);
 
     expect(container.querySelector("[data-candidate-id]")).not.toBeInTheDocument();
     expect(container).not.toHaveTextContent(/commit|agent-approved|human-pending|rights holder|privacy review/i);
@@ -42,7 +42,7 @@ describe("case studies", () => {
   it("keeps each case study concise and ends with live project links", () => {
     for (const project of projects) {
       const { container, unmount } = render(
-        <MemoryRouter><ProjectPage project={project} /></MemoryRouter>,
+        <RouterProvider router={createMemoryRouter([{ path: "/", element: <ProjectPage project={project} /> }])} />,
       );
       const words = (container.textContent ?? "").trim().split(/\s+/);
 

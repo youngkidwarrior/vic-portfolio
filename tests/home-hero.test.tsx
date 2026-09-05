@@ -1,5 +1,6 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { MemoryRouter } from "react-router";
 import Home from "~/routes/home";
 
 vi.mock("~/components/project-row", () => ({ ProjectRow: () => null }));
@@ -13,7 +14,7 @@ afterEach(cleanup);
 
 describe("homepage", () => {
   it("leads with Victor, his portrait, introduction, and resume", () => {
-    const { container } = render(<Home />);
+    const { container } = render(<MemoryRouter><Home /></MemoryRouter>);
     const hero = container.querySelector(".hero");
 
     expect(hero).not.toBeNull();
@@ -30,13 +31,13 @@ describe("homepage", () => {
   });
 
   it("keeps the homepage vocabulary visitor-facing", () => {
-    const { container } = render(<Home />);
+    const { container } = render(<MemoryRouter><Home /></MemoryRouter>);
 
     expect(container).not.toHaveTextContent(/agent-approved|human-pending|candidate|owner-attested/i);
   });
 
   it("keeps one compact award without repeating the About section", () => {
-    const { container } = render(<Home />);
+    const { container } = render(<MemoryRouter><Home /></MemoryRouter>);
 
     expect(screen.getByRole("heading", { level: 2, name: "Winner, Aragon Hack for Freedom" })).toBeInTheDocument();
     expect(container.querySelectorAll("#about")).toHaveLength(1);

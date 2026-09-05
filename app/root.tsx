@@ -1,12 +1,12 @@
 import type { LinksFunction, MetaFunction } from "react-router";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "react-router";
-import * as m from "motion/react-m";
-import { editorialEase, MotionSystem, useMotionSettings } from "~/components/motion-system";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { MotionSystem } from "~/components/motion-system";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import { site } from "~/data/site";
 import { createSeoMeta } from "~/utils/seo";
 import "~/styles/app.css";
+import "~/styles/project-transition.css";
 import "@fontsource-variable/space-grotesk";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
@@ -59,26 +59,12 @@ export default function App() {
     <MotionSystem>
       <div className="site-shell">
         <SiteHeader />
-        <PageContent />
+        <main id="main-content" tabIndex={-1}>
+          <Outlet />
+        </main>
         <SiteFooter />
       </div>
     </MotionSystem>
-  );
-}
-
-function PageContent() {
-  const { pathname } = useLocation();
-  const { reducedMotion } = useMotionSettings();
-  return (
-    <m.main
-      key={pathname}
-      id="main-content"
-      initial={false}
-      animate={reducedMotion || pathname === "/" ? { y: 0 } : { y: [12, 0] }}
-      transition={{ duration: 0.5, ease: editorialEase }}
-    >
-      <Outlet />
-    </m.main>
   );
 }
 

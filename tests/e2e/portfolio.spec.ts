@@ -16,6 +16,7 @@ test.describe("prerendered content", () => {
   test.use({ javaScriptEnabled: false });
   test("project content remains readable without JavaScript", async ({ page }) => {
     await page.goto("/");
+    await expect(page.locator("[data-artwork]")).toHaveCount(5);
     const content = [
       page.getByRole("heading", { name: "My recent highlights" }),
       ...await page.getByRole("link", { name: "Project details" }).all(),
@@ -103,11 +104,12 @@ for (const { route, canonicalUrl, imageUrl } of socialPreviewRoutes) {
 
 test("primary journey reaches a case study and returns", async ({ page }) => {
   await page.goto("/");
+  const originUrl = page.url();
   await page.getByRole("link", { name: "Project details" }).first().click();
   await expect(page).toHaveURL(/\/work\/send$/);
   await expect(page.getByRole("heading", { level: 1, name: "Send" })).toBeVisible();
   await page.getByRole("link", { name: "All work" }).click();
-  await expect(page).toHaveURL(/\/#work$/);
+  await expect(page).toHaveURL(originUrl);
 });
 
 test("theme selection persists across navigation", async ({ page }) => {
