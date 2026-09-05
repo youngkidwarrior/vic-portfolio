@@ -12,7 +12,6 @@
   mix-blend-mode: multiply;
   mask-image: radial-gradient(ellipse at center, #000 45%, transparent 73%);
 }
-.project-art .artwork-controls { position: absolute; right: 3rem; bottom: 0; pointer-events: auto; }
 :root[data-theme="dark"] .project-art-window { mix-blend-mode: screen; opacity: .38; }
 :root[data-theme="dark"] .project-art-slice img { filter: invert(1) hue-rotate(180deg); }
 
@@ -51,7 +50,6 @@
 
 @media (max-width: 900px) {
   .project-art { inset: -3rem -2rem -3rem; }
-  .project-art .artwork-controls { right: 2rem; bottom: -.1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

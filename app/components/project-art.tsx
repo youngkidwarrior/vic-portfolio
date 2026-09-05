@@ -1,6 +1,5 @@
 import * as m from "motion/react-m";
 import { useTransform, type AnimationSequence, type MotionValue } from "motion/react";
-import { ArtworkReplay } from "~/components/artwork-replay";
 import { useArtworkPlayback } from "~/components/use-artwork-playback";
 import type { ProjectSlug } from "~/data/site";
 import "~/styles/project-art.css";
@@ -35,17 +34,16 @@ export function ProjectArt({ slug, pointerX, pointerY }: {
   pointerY: MotionValue<number>;
 }) {
   const src = `/images/art/${slug}-poster.webp`;
-  const { scope, ...playback } = useArtworkPlayback<HTMLDivElement>(src, sequences[slug]);
+  const { scope, reducedMotion } = useArtworkPlayback<HTMLDivElement>(src, sequences[slug]);
   const x = useTransform(pointerX, [-1, 1], [-10, 10]);
   const y = useTransform(pointerY, [-1, 1], [-7, 7]);
   return <div className={`project-art project-art-${slug}`} data-artwork={slug}>
     <div ref={scope} className="project-art-window" aria-hidden="true">
-      <m.div className="project-art-pointer" style={playback.reducedMotion ? undefined : { x, y }}>
+      <m.div className="project-art-pointer" style={reducedMotion ? undefined : { x, y }}>
         {(["one", "two", "three"] as const).map(part => <div key={part} data-art-layer className={`project-art-slice project-art-${part}`}>
           <img data-art-media src={src} alt="" width="1120" height="1400" loading="lazy" decoding="async" draggable={false} />
         </div>)}
       </m.div>
     </div>
-    <ArtworkReplay name={slug === "brightid" ? "BrightID" : slug === "open-source" ? "open source" : slug} {...playback} />
   </div>;
 }

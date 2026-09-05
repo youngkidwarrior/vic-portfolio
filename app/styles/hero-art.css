@@ -34,7 +34,6 @@
   border-top: 0;
   padding-top: 1.2rem;
 }
-.hero-art-scene .artwork-controls { position: absolute; right: var(--pad); bottom: .65rem; pointer-events: auto; }
 .hero-portrait-rule {
   position: absolute;
   inset: 0 0 auto;

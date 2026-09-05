@@ -19,29 +19,16 @@ test("enlarged artwork stays in the background without displacing primary conten
   }
 });
 
-test("artwork plays at a fixed scroll position, replays, and settles", async ({ page, isMobile }, testInfo) => {
+test("artwork plays automatically at a fixed scroll position and settles without controls", async ({ page }, testInfo) => {
   test.setTimeout(60000);
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
+  await expect(page.getByRole("button", { name: /Replay animation/i })).toHaveCount(0);
   for (const slug of ["hero", "send", "shenanigan", "brightid", "open-source"]) {
     const art = page.locator(`[data-artwork="${slug}"]`);
-    const replay = art.getByRole("button", { name: /Replay/ });
-    await replay.evaluate(element => element.scrollIntoView({ block: "end", behavior: "instant" }));
-    await expect(replay).toBeEnabled();
-    await expect.poll(() => art.evaluate(element => {
-      const reveal = element.closest(".reveal-motion");
-      if (!reveal) return true;
-      const style = getComputedStyle(reveal);
-      return Number(style.opacity) === 1 && Math.abs(new DOMMatrixReadOnly(style.transform).m42) < 0.1;
-    })).toBe(true);
-    // Locator.click also asks Chromium to scroll, which smooth-scrolls even when
-    // the control is already visible. Use real pointer input for a stationary take.
-    const button = await replay.boundingBox();
-    expect(button).not.toBeNull();
-    const point = { x: button!.x + button!.width / 2, y: button!.y + button!.height / 2 };
-    if (isMobile) await page.touchscreen.tap(point.x, point.y);
-    else await page.mouse.click(point.x, point.y);
     const frames = await art.evaluate(async element => {
+      // Begin observing before viewport entry starts the one-time animation.
+      element.scrollIntoView({ block: "center", behavior: "instant" });
       const frames: { y: number; transforms: string[]; opacities: number[] }[] = [];
       const start = performance.now();
       await new Promise<void>(resolve => {
@@ -63,13 +50,12 @@ test("artwork plays at a fixed scroll position, replays, and settles", async ({ 
   }
 });
 
-test("reduced motion settles artwork and removes playback controls", async ({ page }) => {
+test("reduced motion settles automatically playing artwork", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   const art = page.locator('[data-artwork="send"]');
-  const replay = art.getByRole("button", { name: /Replay/ });
-  await replay.scrollIntoViewIfNeeded();
-  await replay.click();
+  await art.scrollIntoViewIfNeeded();
+  await expect.poll(() => art.locator("[data-art-layer]").first().evaluate(element => Number(getComputedStyle(element).opacity))).toBeLessThan(0.99);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.getByRole("button", { name: /Replay/ })).toHaveCount(0);
   for (const layer of await page.locator("[data-art-layer]").all()) {
