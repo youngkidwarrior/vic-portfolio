@@ -1,5 +1,7 @@
 import type { LinksFunction, MetaFunction } from "react-router";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "react-router";
+import * as m from "motion/react-m";
+import { editorialEase, MotionSystem, useMotionSettings } from "~/components/motion-system";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import { site } from "~/data/site";
@@ -8,6 +10,7 @@ import "~/styles/app.css";
 import "@fontsource-variable/space-grotesk";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
+import displayFont from "@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url";
 
 export const meta: MetaFunction = () => createSeoMeta({
   title: `${site.name} | ${site.role}`,
@@ -17,6 +20,7 @@ export const meta: MetaFunction = () => createSeoMeta({
 
 export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+  { rel: "preload", href: displayFont, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -52,13 +56,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <div className="site-shell">
-      <SiteHeader />
-      <main id="main-content">
-        <Outlet />
-      </main>
-      <SiteFooter />
-    </div>
+    <MotionSystem>
+      <div className="site-shell">
+        <SiteHeader />
+        <PageContent />
+        <SiteFooter />
+      </div>
+    </MotionSystem>
+  );
+}
+
+function PageContent() {
+  const { pathname } = useLocation();
+  const { reducedMotion } = useMotionSettings();
+  return (
+    <m.main
+      key={pathname}
+      id="main-content"
+      initial={false}
+      animate={reducedMotion || pathname === "/" ? { y: 0 } : { y: [12, 0] }}
+      transition={{ duration: 0.5, ease: editorialEase }}
+    >
+      <Outlet />
+    </m.main>
   );
 }
 

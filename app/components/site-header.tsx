@@ -1,11 +1,14 @@
 import { List, X } from "@phosphor-icons/react";
+import * as m from "motion/react-m";
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router";
 import { ThemeToggle } from "~/components/theme-toggle";
+import { useMotionSettings } from "~/components/motion-system";
 
 const navigationId = "primary-navigation";
 
 export function SiteHeader() {
+  const { reducedMotion } = useMotionSettings();
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
@@ -47,7 +50,7 @@ export function SiteHeader() {
         </nav>
         <div className="nav-actions">
           <ThemeToggle />
-          <button
+          <m.button
             ref={menuButtonRef}
             className="icon-button menu-button"
             type="button"
@@ -55,9 +58,10 @@ export function SiteHeader() {
             aria-controls={navigationId}
             aria-expanded={open}
             aria-label="Toggle navigation"
+            whileTap={reducedMotion ? undefined : { scale: 0.9 }}
           >
             {open ? <X size={20} weight="bold" aria-hidden /> : <List size={20} weight="bold" aria-hidden />}
-          </button>
+          </m.button>
         </div>
       </div>
     </header>

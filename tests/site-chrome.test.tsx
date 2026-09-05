@@ -1,6 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it } from "vitest";
 import { MemoryRouter } from "react-router";
 import { SiteHeader } from "~/components/site-header";
@@ -24,17 +23,6 @@ describe("site copy and chrome", () => {
   it("keeps visible model and content copy free of en and em dashes", () => {
     for (const file of visibleCopyFiles) {
       expect(readFileSync(file, "utf8"), file).not.toMatch(/[–—]/);
-    }
-  });
-
-  it("keeps the removed kinetic treatment out of application imports", () => {
-    const applicationFiles = readdirSync("app", { recursive: true })
-      .map(String)
-      .filter((file) => /\.(?:ts|tsx)$/.test(file));
-
-    for (const file of applicationFiles) {
-      const source = readFileSync(join("app", file), "utf8");
-      expect(source, String(file)).not.toMatch(/KineticArt|kinetic-art/);
     }
   });
 

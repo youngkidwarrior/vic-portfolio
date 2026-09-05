@@ -1,7 +1,10 @@
 import { Moon, Sun } from "@phosphor-icons/react";
+import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
+import { useMotionSettings } from "~/components/motion-system";
 
 export function ThemeToggle() {
+  const { reducedMotion } = useMotionSettings();
   const [theme, setTheme] = useState<"light" | "dark" | null>(null);
 
   useEffect(() => {
@@ -22,8 +25,10 @@ export function ThemeToggle() {
     : "Toggle color theme";
 
   return (
-    <button className="icon-button" type="button" onClick={toggleTheme} aria-label={accessibleLabel}>
-      {theme === "dark" ? <Sun size={19} weight="bold" aria-hidden /> : <Moon size={19} weight="bold" aria-hidden />}
-    </button>
+    <m.button className="icon-button" type="button" onClick={toggleTheme} aria-label={accessibleLabel} whileTap={reducedMotion ? undefined : { scale: 0.9 }}>
+      <m.span className="theme-symbol" initial={false} animate={{ rotate: reducedMotion ? 0 : theme === "dark" ? 90 : 0 }}>
+        {theme === "dark" ? <Sun size={19} weight="bold" aria-hidden /> : <Moon size={19} weight="bold" aria-hidden />}
+      </m.span>
+    </m.button>
   );
 }

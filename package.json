@@ -8,12 +8,16 @@
     "setup:resume": "python3 -m pip install --requirement requirements.txt",
     "build:sites": "bun run build && rm -rf ./dist && mkdir -p ./dist/server ./dist/client && cp -R ./build/client/. ./dist/client/ && cp ./sites-worker.mjs ./dist/server/index.js",
     "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
+    "start": "python3 -m http.server --directory build/client --bind 127.0.0.1",
     "typecheck": "react-router typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
-    "check": "bun run typecheck && bun run test && bun run build"
+    "test:e2e": "bun run build && playwright test",
+    "check": "bun run typecheck && bun run test && bun run build",
+    "test:e2e:built": "playwright test",
+    "test:motion": "bun run build && MOTION_REVIEW=1 playwright test tests/e2e/motion.spec.ts",
+    "check:all": "bun run check && bun run test:e2e:built",
+    "report:assets": "bun scripts/asset-report.mjs"
   },
   "dependencies": {
     "@fontsource-variable/space-grotesk": "^5.3.0",
@@ -22,7 +26,7 @@
     "@react-router/node": "7.9.5",
     "@react-router/serve": "7.9.5",
     "isbot": "5.1.31",
-    "motion": "latest",
+    "motion": "13.1.1",
     "react": "latest",
     "react-dom": "latest",
     "react-router": "7.9.5"

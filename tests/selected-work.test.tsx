@@ -16,7 +16,7 @@ describe("selected work", () => {
   it("gives every project one authentic screenshot and one concise composition", () => {
     const { container } = render(
       <MemoryRouter>
-        {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
+        {projects.map((project) => <ProjectRow key={project.slug} project={project} />)}
       </MemoryRouter>,
     );
 
@@ -30,7 +30,7 @@ describe("selected work", () => {
   it("shows each project's full contribution scope without a separate metrics treatment", () => {
     const { container } = render(
       <MemoryRouter>
-        {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
+        {projects.map((project) => <ProjectRow key={project.slug} project={project} />)}
       </MemoryRouter>,
     );
 
@@ -52,7 +52,7 @@ describe("selected work", () => {
   it("uses the screenshot as the live-project action and offers project details", () => {
     render(
       <MemoryRouter>
-        {projects.map((project, index) => <ProjectRow key={project.slug} project={project} priority={index === 0} />)}
+        {projects.map((project) => <ProjectRow key={project.slug} project={project} />)}
       </MemoryRouter>,
     );
 

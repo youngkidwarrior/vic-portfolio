@@ -21,7 +21,13 @@ jobs:
       - run: bun run test
       - run: bun run build
       - run: bunx playwright install --with-deps chromium
-      - run: bun run test:e2e
+      - run: bun run test:e2e:built
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-failures
+          path: test-results/
+          retention-days: 7
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
