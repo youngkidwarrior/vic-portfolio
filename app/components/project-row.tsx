@@ -57,7 +57,7 @@ export function ProjectRow({ project }: { project: Project }) {
           <figure className="project-screenshot">
             <span aria-hidden className="project-transition-frame" style={transition.frameStyle} />
             <div className="project-media">
-              <ProjectArt slug={project.slug} progress={scrollYProgress} pointerX={inkX} pointerY={inkY} />
+              <ProjectArt slug={project.slug} pointerX={inkX} pointerY={inkY} />
               <a
                 className="project-image-link"
                 href={project.screenshot.href}
