@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import { KineticLink } from "~/components/kinetic-link";
 import { Reveal } from "~/components/reveal";
 import { site } from "~/data/site";

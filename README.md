@@ -51,6 +51,16 @@ This builds current source and saves desktop/mobile videos plus light, dark, poi
 
 For bundle comparisons, run `bun run build` then `bun run report:assets` on each revision. The report measures all emitted client JavaScript, CSS, and fonts, with raw and gzip byte totals. These are artifact sizes, not measured page-load times or per-route transfer totals.
 
+For runtime comparisons, start the dev server or production preview, then run a headed Chromium profile with a fresh browser context and HTTP cache disabled:
+
+```sh
+TARGET_URL=http://127.0.0.1:8000 CPU=4 MOBILE=1 JOURNEY=1 LABEL=motion node scripts/profile-motion.mjs
+```
+
+Omit `MOBILE` for desktop, `CPU` for native CPU speed, or `JOURNEY` for initial load only. Keep the browser visible and run profiles separately from other tests. The script writes frame intervals, long tasks, a Chromium trace, and a screenshot to `/tmp/portfolio-<LABEL>.json` and `.png`. Compare the same viewport, CPU setting, and display refresh rate. Callback FPS alone does not prove smooth presentation: inspect the `presentations` dropped/partial counts too. CPU throttling and touch emulation do not reproduce a physical phone's GPU.
+
+Timed entrances use full `transform` keyframes so Motion can use native browser animation. Individual `x`, `y`, and `scale` keyframes use its JavaScript frame loop and caused substantially more paint/raster work in cold-cache scroll profiling. Interactive pointer springs remain on separate elements; text reveals finish with `transform: none` to release the stacking context.
+
 ## Content and routes
 
 Project narratives, links, screenshots, and site metadata live in `app/data/site.ts`. The web and PDF resumes share `content/resume.json`; after editing it, regenerate the downloadable PDF with:

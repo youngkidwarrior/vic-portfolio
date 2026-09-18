@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import type { MetaFunction } from "react-router";
 import { Hero } from "~/components/hero";
 import { ProjectRow } from "~/components/project-row";

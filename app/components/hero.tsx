@@ -1,4 +1,5 @@
-import { ArrowDownRight, ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowDownRight } from "@phosphor-icons/react/dist/csr/ArrowDownRight";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import * as m from "motion/react-m";
 import { useAnimate, useMotionValue, useScroll, useSpring, useTransform, stagger } from "motion/react";
 import { useEffect } from "react";
@@ -36,8 +37,8 @@ export function Hero() {
     if (reducedMotion) return;
     // Text stays readable while the artwork runs its own visible entrance.
     const entrance = animate([
-      ["[data-hero-line]", { y: [18, 0] }, { at: 0.08, duration: 0.8, delay: stagger(0.065), ease: editorialEase }],
-      ["[data-hero-rule]", { scaleX: [0.35, 1] }, { at: 0.12, duration: 0.9, ease: editorialEase }],
+      ["[data-hero-line]", { transform: ["translateY(18px)", "translateY(0px)"] }, { at: 0.08, duration: 0.8, delay: stagger(0.065), ease: editorialEase }],
+      ["[data-hero-rule]", { transform: ["scaleX(0.35)", "scaleX(1)"] }, { at: 0.12, duration: 0.9, ease: editorialEase }],
     ]);
     return () => {
       entrance.stop();

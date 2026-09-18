@@ -1,4 +1,5 @@
-import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import { Link } from "react-router";
 import { useProjectTransition } from "~/components/project-transition";
 import type { Project } from "~/data/site";

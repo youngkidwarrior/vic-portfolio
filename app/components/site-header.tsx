@@ -1,4 +1,5 @@
-import { List, X } from "@phosphor-icons/react";
+import { List } from "@phosphor-icons/react/dist/csr/List";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import * as m from "motion/react-m";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";

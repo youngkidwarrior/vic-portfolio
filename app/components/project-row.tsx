@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import * as m from "motion/react-m";
 import { useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
 import { useEffect, useRef, type PointerEvent } from "react";

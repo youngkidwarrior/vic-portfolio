@@ -4,12 +4,13 @@ import { useArtworkPlayback } from "~/components/use-artwork-playback";
 
 const artwork = "/images/art/hero-poster.webp";
 const inkEase = [0.32, 0.02, 0.2, 1] as const;
+// Full transforms let Motion use native animation instead of per-frame JS writes.
 const sequence: AnimationSequence = [
   [".convergence-rest", { opacity: [0.1, 0.1, 1] }, { duration: 3.2, times: [0, 0.85, 1] }],
-  [".convergence-blue", { x: [-150, 0], opacity: [0, 1] }, { at: 0.12, duration: 2.1, ease: inkEase }],
-  [".convergence-red", { x: [-120, 0], opacity: [0, 1] }, { at: 0.38, duration: 2.1, ease: inkEase }],
-  [".convergence-yellow", { x: [-140, 0], opacity: [0, 1] }, { at: 0.64, duration: 2.1, ease: inkEase }],
-  [".convergence-green", { x: [-180, 0], opacity: [0, 1] }, { at: 0.9, duration: 2.1, ease: inkEase }],
+  [".convergence-blue", { transform: ["translateX(-150px)", "translateX(0px)"], opacity: [0, 1] }, { at: 0.12, duration: 2.1, ease: inkEase }],
+  [".convergence-red", { transform: ["translateX(-120px)", "translateX(0px)"], opacity: [0, 1] }, { at: 0.38, duration: 2.1, ease: inkEase }],
+  [".convergence-yellow", { transform: ["translateX(-140px)", "translateX(0px)"], opacity: [0, 1] }, { at: 0.64, duration: 2.1, ease: inkEase }],
+  [".convergence-green", { transform: ["translateX(-180px)", "translateX(0px)"], opacity: [0, 1] }, { at: 0.9, duration: 2.1, ease: inkEase }],
 ];
 
 // Source-image coordinates follow the gaps between inks and stop before the hub.
