@@ -14,7 +14,9 @@ export const site = {
 };
 
 export type ProjectScreenshot = {
+  // JPEG URLs remain stable for social previews; pages use the smaller WebP.
   src: `/images/work/${string}.jpg`;
+  webpSrc: `/images/work/${string}.webp`;
   href: HttpsUrl;
   width: number;
   height: number;
@@ -44,6 +46,7 @@ export const projects: Project[] = [
     links: [{ label: "Visit Send", href: "https://send.it" }],
     screenshot: {
       src: "/images/work/send.jpg",
+      webpSrc: "/images/work/send.webp",
       href: "https://send.it",
       width: 1120,
       height: 630,
@@ -86,6 +89,7 @@ export const projects: Project[] = [
     ],
     screenshot: {
       src: "/images/work/pants.jpg",
+      webpSrc: "/images/work/pants.webp",
       href: "https://pants.energy",
       width: 720,
       height: 576,
@@ -124,6 +128,7 @@ export const projects: Project[] = [
     ],
     screenshot: {
       src: "/images/work/brightid-bot.jpg",
+      webpSrc: "/images/work/brightid-bot.webp",
       href: "https://bot.brightid.org",
       width: 1120,
       height: 630,
@@ -164,6 +169,7 @@ export const projects: Project[] = [
     ],
     screenshot: {
       src: "/images/work/open-source.jpg",
+      webpSrc: "/images/work/open-source.webp",
       href: "https://github.com/youngkidwarrior",
       width: 1120,
       height: 630,

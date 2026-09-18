@@ -13,7 +13,7 @@ describe("case studies", () => {
         <RouterProvider router={createMemoryRouter([{ path: "/", element: <ProjectPage project={project} /> }])} />,
       );
 
-      expect(screen.getByRole("img", { name: project.screenshot.alt })).toHaveAttribute("src", project.screenshot.src);
+      expect(screen.getByRole("img", { name: project.screenshot.alt })).toHaveAttribute("src", project.screenshot.webpSrc);
       expect(screen.getByRole("link", { name: `Visit the website shown for ${project.title}` })).toHaveAttribute(
         "href",
         project.screenshot.href,
