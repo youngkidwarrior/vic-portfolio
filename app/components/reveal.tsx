@@ -1,4 +1,5 @@
-import { inView, useAnimate } from "motion/react";
+import { inView } from "motion/react";
+import { useAnimate } from "motion/react-mini";
 import { useEffect, type PropsWithChildren } from "react";
 import { editorialEase, useMotionSettings } from "~/components/motion-system";
 
@@ -13,10 +14,11 @@ export function Reveal({ children, className = "", delay = 0 }: PropsWithChildre
     // positions and slow hydration. Only offscreen content earns an entrance.
     const bounds = element.getBoundingClientRect();
     if (bounds.top < window.innerHeight && bounds.bottom > 0) return;
-    const prepare = animate(element, { opacity: 0, y: 28 }, { duration: 0 });
+    const prepare = animate(element, { opacity: 0, transform: "translateY(28px)" }, { duration: 0 });
     let entrance: ReturnType<typeof animate> | undefined;
     const stop = inView(element, () => {
-      entrance = animate(element, { opacity: 1, y: 0 }, { duration: 0.72, delay, ease: editorialEase });
+      // The native-only hook preserves `none` without a queued MotionValue render.
+      entrance = animate(element, { opacity: 1, transform: "none" }, { duration: 0.72, delay, ease: editorialEase });
     }, { margin: "0px 0px -48px 0px" });
     return () => {
       stop();

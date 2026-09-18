@@ -5,26 +5,27 @@ import type { ProjectSlug } from "~/data/site";
 import "~/styles/project-art.css";
 
 const ease = [0.32, 0.02, 0.2, 1] as const;
+// Keep timed transforms native; pointer springs live on the separate parent plane.
 const sequences: Record<ProjectSlug, AnimationSequence> = {
   send: [
-    [".project-art-one", { x: [-72, 0], opacity: [0.1, 1] }, { at: 0.1, duration: 2.1, ease }],
-    [".project-art-two", { x: [64, 0], opacity: [0.1, 1] }, { at: 0.35, duration: 2.1, ease }],
-    [".project-art-three", { x: [-88, 0], opacity: [0.1, 1] }, { at: 0.6, duration: 2.1, ease }],
+    [".project-art-one", { transform: ["translateX(-72px)", "translateX(0px)"], opacity: [0.1, 1] }, { at: 0.1, duration: 2.1, ease }],
+    [".project-art-two", { transform: ["translateX(64px)", "translateX(0px)"], opacity: [0.1, 1] }, { at: 0.35, duration: 2.1, ease }],
+    [".project-art-three", { transform: ["translateX(-88px)", "translateX(0px)"], opacity: [0.1, 1] }, { at: 0.6, duration: 2.1, ease }],
   ],
   shenanigan: [
-    [".project-art-one", { y: [64, 0], opacity: [0.1, 1] }, { at: 0.1, duration: 1.9, ease }],
-    [".project-art-two", { y: [82, 0], opacity: [0.1, 1] }, { at: 0.4, duration: 1.9, ease }],
-    [".project-art-three", { y: [100, 0], opacity: [0.1, 1] }, { at: 0.7, duration: 1.9, ease }],
+    [".project-art-one", { transform: ["translateY(64px)", "translateY(0px)"], opacity: [0.1, 1] }, { at: 0.1, duration: 1.9, ease }],
+    [".project-art-two", { transform: ["translateY(82px)", "translateY(0px)"], opacity: [0.1, 1] }, { at: 0.4, duration: 1.9, ease }],
+    [".project-art-three", { transform: ["translateY(100px)", "translateY(0px)"], opacity: [0.1, 1] }, { at: 0.7, duration: 1.9, ease }],
   ],
   brightid: [
-    [".project-art-one", { x: [-68, 0], opacity: [0.1, 1] }, { at: 0.1, duration: 2.2, ease }],
-    [".project-art-two", { y: [46, 0], opacity: [0.1, 1] }, { at: 0.3, duration: 2.2, ease }],
-    [".project-art-three", { x: [68, 0], opacity: [0.1, 1] }, { at: 0.5, duration: 2.2, ease }],
+    [".project-art-one", { transform: ["translateX(-68px)", "translateX(0px)"], opacity: [0.1, 1] }, { at: 0.1, duration: 2.2, ease }],
+    [".project-art-two", { transform: ["translateY(46px)", "translateY(0px)"], opacity: [0.1, 1] }, { at: 0.3, duration: 2.2, ease }],
+    [".project-art-three", { transform: ["translateX(68px)", "translateX(0px)"], opacity: [0.1, 1] }, { at: 0.5, duration: 2.2, ease }],
   ],
   "open-source": [
-    [".project-art-one", { scale: [1.16, 1], y: [-42, 0], opacity: [0.1, 1] }, { at: 0.1, duration: 2.2, ease }],
-    [".project-art-two", { scale: [1.16, 1], x: [-64, 0], opacity: [0.1, 1] }, { at: 0.35, duration: 2.2, ease }],
-    [".project-art-three", { scale: [1.16, 1], x: [64, 0], opacity: [0.1, 1] }, { at: 0.6, duration: 2.2, ease }],
+    [".project-art-one", { transform: ["translateY(-42px) scale(1.16)", "translateY(0px) scale(1)"], opacity: [0.1, 1] }, { at: 0.1, duration: 2.2, ease }],
+    [".project-art-two", { transform: ["translateX(-64px) scale(1.16)", "translateX(0px) scale(1)"], opacity: [0.1, 1] }, { at: 0.35, duration: 2.2, ease }],
+    [".project-art-three", { transform: ["translateX(64px) scale(1.16)", "translateX(0px) scale(1)"], opacity: [0.1, 1] }, { at: 0.6, duration: 2.2, ease }],
   ],
 };
 

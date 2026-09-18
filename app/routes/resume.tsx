@@ -1,4 +1,5 @@
-import { ArrowDown, ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowDown } from "@phosphor-icons/react/dist/csr/ArrowDown";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import type { MetaFunction } from "react-router";
 import { resumeContent } from "~/data/resume";
 import { site } from "~/data/site";

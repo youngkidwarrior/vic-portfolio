@@ -1,4 +1,5 @@
-import { Moon, Sun } from "@phosphor-icons/react";
+import { Moon } from "@phosphor-icons/react/dist/csr/Moon";
+import { Sun } from "@phosphor-icons/react/dist/csr/Sun";
 import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
 import { useMotionSettings } from "~/components/motion-system";
