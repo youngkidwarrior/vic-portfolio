@@ -21,7 +21,7 @@ describe("selected work", () => {
     expect(container.querySelectorAll("[data-composition='project-showcase']")).toHaveLength(4);
     expect(screen.getAllByRole("img")).toHaveLength(4);
     for (const project of projects) {
-      expect(screen.getByRole("img", { name: project.screenshot.alt })).toHaveAttribute("src", project.screenshot.src);
+      expect(screen.getByRole("img", { name: project.screenshot.alt })).toHaveAttribute("src", project.screenshot.webpSrc);
     }
   });
 

@@ -49,7 +49,7 @@ bun run test:motion
 
 This builds current source and saves desktop/mobile videos plus light, dark, pointer, selected-work, case-study, and individual project screenshots in `test-results/`. The suite checks artwork delivery, pointer return, touch scrolling, changed reduced-motion preferences, slow hydration, and navigation. `project-transitions.spec.ts` additionally observes real native snapshots and checks exact history/scroll restoration, Back/Forward, direct entry, and browsers without the native API. Review the recordings for pacing and visual taste; passing assertions alone cannot establish either.
 
-For bundle comparisons, run `bun run build` then `bun run report:assets` on each revision. The report measures all emitted client JavaScript, CSS, and fonts, with raw and gzip byte totals. These are artifact sizes, not measured page-load times or per-route transfer totals.
+For bundle comparisons, run `bun run build` then `bun run report:assets` on each revision. The report measures all emitted client JavaScript, CSS, and fonts, with raw and gzip byte totals, plus an inventory of copied images. These are artifact sizes, not measured page-load times or per-route transfer totals. `TARGET_URL=http://127.0.0.1:8000 node scripts/profile-images.mjs` measures same-origin resource bodies on a fresh, cache-disabled desktop visit before and after scrolling through every project. The [image optimization report](docs/image-optimization.md) separates page-transfer savings from deployment storage.
 
 ## Content and routes
 

@@ -25,7 +25,7 @@ export function ProjectPage({ project }: { project: Project }) {
             rel="noreferrer"
             aria-label={`Visit the website shown for ${project.title}`}
           >
-            <img style={transition.imageStyle} src={project.screenshot.src} alt={project.screenshot.alt} width={project.screenshot.width} height={project.screenshot.height} decoding="async" />
+            <img style={transition.imageStyle} src={project.screenshot.webpSrc} alt={project.screenshot.alt} width={project.screenshot.width} height={project.screenshot.height} decoding="async" />
           </a>
           <figcaption>{project.screenshot.caption}</figcaption>
         </figure>
