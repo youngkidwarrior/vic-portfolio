@@ -15,11 +15,23 @@ export function useArtworkPlayback<T extends Element>(src: string, sequence: Ani
     let cancelled = false;
     let stopObserving: (() => void) | undefined;
     let playback: ReturnType<typeof animate> | undefined;
+    // One viewport of lead time keeps preparation ahead of a normal scroll.
+    // Playback still waits for actual entry, and distant sections stay lazy.
     const stopPreloading = inView(element, () => {
-      const image = new Image();
-      image.fetchPriority = "low";
-      image.src = src;
-      void image.decode().then(() => {
+      // Prepare the rendered images, not just a detached copy. Native lazy
+      // loading otherwise decides independently when these layers are ready.
+      const images = [...element.querySelectorAll<HTMLImageElement>("img[data-art-media]")];
+      if (images.length === 0) {
+        // SVGImageElement has no decode API; prime its shared image resource.
+        const image = new Image();
+        image.fetchPriority = "low";
+        image.src = src;
+        images.push(image);
+      }
+      void Promise.all(images.map(image => {
+        image.loading = "eager";
+        return image.decode();
+      })).then(() => {
         if (cancelled) return;
         // Oversized background prints are intentionally cropped by the layout.
         stopObserving = inView(element, () => {
@@ -30,7 +42,7 @@ export function useArtworkPlayback<T extends Element>(src: string, sequence: Ani
       }).catch(() => {
         // Keep the original print when the image cannot be decoded.
       });
-    }, { margin: "200px" });
+    }, { margin: `${window.innerHeight}px 0px` });
     return () => {
       cancelled = true;
       stopPreloading();

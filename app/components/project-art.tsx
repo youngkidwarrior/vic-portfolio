@@ -42,7 +42,7 @@ export function ProjectArt({ slug, pointerX, pointerY }: {
     <div ref={scope} className="project-art-window" aria-hidden="true">
       <m.div className="project-art-pointer" style={reducedMotion ? undefined : { x, y }}>
         {(["one", "two", "three"] as const).map(part => <div key={part} data-art-layer className={`project-art-slice project-art-${part}`}>
-          <img data-art-media src={src} alt="" width="1120" height="1400" loading="lazy" decoding="async" draggable={false} />
+          <img data-art-media src={src} alt="" width="1120" height="1400" loading="lazy" decoding="async" fetchPriority="low" draggable={false} />
         </div>)}
       </m.div>
     </div>

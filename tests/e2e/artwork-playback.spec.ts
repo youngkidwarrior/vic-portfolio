@@ -2,6 +2,36 @@ import { expect, test } from "@playwright/test";
 
 test.use({ video: process.env.MOTION_REVIEW ? "on" : "retain-on-failure" });
 
+test("upcoming artwork decodes its rendered layers before entering the viewport", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.addInitScript(() => {
+    const decode = HTMLImageElement.prototype.decode;
+    HTMLImageElement.prototype.decode = async function () {
+      await decode.call(this);
+      if (this.isConnected) this.setAttribute("data-test-decoded", "true");
+    };
+  });
+  await page.goto("/");
+  await expect(page.getByRole("button", { name: "Switch to dark theme" })).toBeVisible();
+  const art = page.locator('[data-artwork="brightid"] .project-art-window');
+  await expect(art.locator("img").first()).toHaveAttribute("loading", "lazy");
+  await art.evaluate(element => {
+    scrollTo({ top: scrollY + element.getBoundingClientRect().top - innerHeight - 300, behavior: "instant" });
+  });
+  await expect(art).not.toBeInViewport();
+  for (const image of await art.locator("img").all()) {
+    await expect(image).toHaveAttribute("loading", "eager");
+    await expect(image).toHaveAttribute("data-test-decoded", "true");
+  }
+  // Preparation must not consume the entrance while the art is still offscreen.
+  for (const layer of await art.locator("[data-art-layer]").all()) {
+    await expect(layer).toHaveCSS("transform", "none");
+    await expect(layer).toHaveCSS("opacity", "1");
+  }
+  await art.scrollIntoViewIfNeeded();
+  await expect.poll(() => art.locator("[data-art-layer]").first().evaluate(element => Number(getComputedStyle(element).opacity))).toBeLessThan(0.99);
+});
+
 test("enlarged artwork stays in the background without displacing primary content", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
